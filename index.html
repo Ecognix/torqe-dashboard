@@ -1,0 +1,949 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Torqe AI Dashboard — Unified inbox, AI tools, pipeline management, and negotiation coaching in one intelligent workspace.">
+  <title>Torqe — Dashboard</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="app">
+    <!-- ============ SIDEBAR ============ -->
+    <div class="sidebar-overlay" id="sidebar-overlay" onclick="toggleMobileSidebar()"></div>
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-header">
+        <div class="sidebar-logo">
+          <img src="logo.png" alt="Torqe Logo" class="logo-img">
+          <span>Torqe</span>
+        </div>
+      </div>
+
+      <nav class="sidebar-nav">
+        <div class="nav-section">
+          <div class="nav-section-title">Main</div>
+          <div class="nav-item active" data-view="inbox" id="nav-inbox">
+            <span class="nav-icon">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><polyline points="3 9 12 15 21 9"/></svg>
+            </span>
+            <span>Inbox</span>
+            <span class="nav-badge">14</span>
+          </div>
+          <div class="nav-item" data-view="ai" id="nav-ai">
+            <span class="nav-icon">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a4 4 0 0 1 4 4c0 .73-.2 1.41-.54 2H18a2 2 0 0 1 2 2v1a2 2 0 0 1-2 2h-1v4a4 4 0 0 1-4 4H11a4 4 0 0 1-4-4v-4H6a2 2 0 0 1-2-2V10a2 2 0 0 1 2-2h2.54A3.96 3.96 0 0 1 8 6a4 4 0 0 1 4-4z"/><path d="M10 14v.5"/><path d="M14 14v.5"/></svg>
+            </span>
+            <span>AI Tools</span>
+            <span class="nav-badge">5</span>
+          </div>
+          <div class="nav-item" data-view="pipeline" id="nav-pipeline">
+            <span class="nav-icon">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
+            </span>
+            <span>Pipeline</span>
+          </div>
+          <div class="nav-item" data-view="scheduled" id="nav-scheduled">
+            <span class="nav-icon">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+            </span>
+            <span>Scheduled Messages</span>
+          </div>
+          <div class="nav-item" data-view="negotiate" id="nav-negotiate">
+            <span class="nav-icon">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.42 4.58a5.4 5.4 0 0 0-7.65 0l-.77.78-.77-.78a5.4 5.4 0 0 0-7.65 0C1.46 6.7 1.33 10.28 4 13l8 8 8-8c2.67-2.72 2.54-6.3.42-8.42z"/></svg>
+            </span>
+            <span>Negotiate Coach</span>
+          </div>
+        </div>
+
+          <div class="nav-section">
+            <div class="nav-section-title">Channels</div>
+            <div class="nav-item" id="nav-whatsapp">
+              <span class="nav-icon">
+                <span class="channel-logo">
+                  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+                </span>
+              </span>
+              <span>WhatsApp</span>
+              <span class="nav-badge">6</span>
+            </div>
+            <div class="nav-item" id="nav-gmail">
+              <span class="nav-icon">
+                <span class="channel-logo">
+                  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M24 5.457v13.909c0 .904-.732 1.636-1.636 1.636h-3.819V11.73L12 16.64l-6.545-4.91v9.273H1.636A1.636 1.636 0 0 1 0 19.366V5.457c0-2.023 2.309-3.178 3.927-1.964L5.455 4.64 12 9.548l6.545-4.91 1.528-1.145C21.69 2.28 24 3.434 24 5.457z"/></svg>
+                </span>
+              </span>
+              <span>Gmail</span>
+              <span class="nav-badge">4</span>
+            </div>
+            <div class="nav-item" id="nav-linkedin">
+              <span class="nav-icon">
+                <span class="channel-logo">
+                  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+                </span>
+              </span>
+              <span>LinkedIn</span>
+              <span class="nav-badge">2</span>
+            </div>
+            <div class="nav-item" id="nav-slack">
+              <span class="nav-icon">
+                <span class="channel-logo">
+                  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M5.042 15.165a2.528 2.528 0 0 1-2.52 2.523A2.528 2.528 0 0 1 0 15.165a2.527 2.527 0 0 1 2.522-2.52h2.52v2.52zM6.313 15.165a2.527 2.527 0 0 1 2.521-2.52 2.527 2.527 0 0 1 2.521 2.52v6.313A2.528 2.528 0 0 1 8.834 24a2.528 2.528 0 0 1-2.521-2.522v-6.313zM8.834 5.042a2.528 2.528 0 0 1-2.521-2.52A2.528 2.528 0 0 1 8.834 0a2.528 2.528 0 0 1 2.521 2.522v2.52H8.834zM8.834 6.313a2.528 2.528 0 0 1 2.521 2.521 2.528 2.528 0 0 1-2.521 2.521H2.522A2.528 2.528 0 0 1 0 8.834a2.528 2.528 0 0 1 2.522-2.521h6.312zM18.956 8.834a2.528 2.528 0 0 1 2.522-2.521A2.528 2.528 0 0 1 24 8.834a2.528 2.528 0 0 1-2.522 2.521h-2.522V8.834zM17.688 8.834a2.528 2.528 0 0 1-2.523 2.521 2.527 2.527 0 0 1-2.52-2.521V2.522A2.527 2.527 0 0 1 15.165 0a2.528 2.528 0 0 1 2.523 2.522v6.312zM15.165 18.956a2.528 2.528 0 0 1 2.523 2.522A2.528 2.528 0 0 1 15.165 24a2.527 2.527 0 0 1-2.52-2.522v-2.522h2.52zM15.165 17.688a2.527 2.527 0 0 1-2.52-2.523 2.526 2.526 0 0 1 2.52-2.52h6.313A2.527 2.527 0 0 1 24 15.165a2.528 2.528 0 0 1-2.522 2.523h-6.313z"/></svg>
+                </span>
+              </span>
+              <span>Slack</span>
+              <span class="nav-badge">1</span>
+            </div>
+            <div class="nav-item" id="nav-instagram">
+              <span class="nav-icon">
+                <span class="channel-logo">
+                  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M7.0301.084c-1.2768.0602-2.1487.264-2.911.5634-.7888.3075-1.4575.72-2.1228 1.3877-.6652.6677-1.075 1.3368-1.3802 2.127-.2954.7638-.4956 1.6365-.552 2.914-.0564 1.2775-.0689 1.6882-.0626 4.947.0062 3.2586.0206 3.6671.0825 4.9473.061 1.2765.264 2.1482.5635 2.9107.308.7889.72 1.4573 1.388 2.1228.6679.6655 1.3365 1.0743 2.1285 1.38.7632.295 1.6361.4961 2.9134.552 1.2773.056 1.6884.069 4.9462.0627 3.2578-.0062 3.668-.0207 4.9478-.0814 1.28-.0607 2.147-.2652 2.9098-.5633.7889-.3086 1.4578-.72 2.1228-1.3881.665-.6682 1.0745-1.3378 1.3795-2.1284.2957-.7632.4966-1.636.552-2.9124.056-1.2809.0692-1.6898.063-4.948-.0063-3.2583-.021-3.6668-.0817-4.9465-.0607-1.2797-.264-2.1487-.5633-2.9117-.3084-.7889-.72-1.4568-1.3876-2.1228C21.2982 1.33 20.628.9208 19.8378.6165 19.074.321 18.2017.1197 16.9244.0645 15.6471.0093 15.236-.005 11.977.0014 8.718.0076 8.31.0215 7.0301.0839m.1402 21.6932c-1.17-.0509-1.8053-.2453-2.2287-.408-.5606-.216-.96-.4771-1.3819-.895-.422-.4178-.6811-.8186-.9-1.378-.1644-.4234-.3624-1.058-.4171-2.228-.0595-1.2645-.072-1.6442-.079-4.848-.007-3.2037.0053-3.583.0607-4.848.05-1.169.2456-1.805.408-2.2282.216-.5613.4762-.96.895-1.3816.4188-.4217.8184-.6814 1.3783-.9003.423-.1651 1.0575-.3614 2.227-.4171 1.2655-.06 1.6447-.072 4.848-.079 3.2033-.007 3.5835.005 4.8495.0608 1.169.0508 1.8053.2445 2.228.408.5608.216.96.4754 1.3816.895.4217.4194.6816.8176.9005 1.3787.1653.4217.3617 1.056.4169 2.2263.0602 1.2655.0739 1.645.0796 4.848.0058 3.203-.0055 3.5834-.061 4.848-.051 1.17-.245 1.8055-.408 2.2294-.216.5604-.4763.96-.8954 1.3814-.419.4215-.8181.6811-1.3783.9-.4224.1649-1.0577.3617-2.2262.4174-1.2656.0595-1.6448.072-4.8493.079-3.2045.007-3.5825-.006-4.848-.0608M16.953 5.5864A1.44 1.44 0 1 0 18.39 4.144a1.44 1.44 0 0 0-1.437 1.4424M5.8385 12.012c.0067 3.4032 2.7706 6.1557 6.173 6.1493 3.4026-.0065 6.157-2.7701 6.1506-6.1733-.0065-3.4032-2.771-6.1565-6.174-6.1498-3.403.0067-6.156 2.771-6.1496 6.1738M8 12.0077a4 4 0 1 1 4.008 3.9921A3.9996 3.9996 0 0 1 8 12.0077"/></svg>
+                </span>
+              </span>
+              <span>Instagram</span>
+            </div>
+            <div class="nav-item" id="nav-telegram">
+              <span class="nav-icon">
+                <span class="channel-logo">
+                  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
+                </span>
+              </span>
+              <span>Telegram</span>
+              <span class="nav-badge">1</span>
+            </div>
+          </div>
+      </nav>
+
+      <div class="sidebar-footer">
+        <div class="sidebar-profile">
+          <div class="profile-avatar">AK</div>
+          <div class="profile-info">
+            <div class="profile-name">Arjun Kapoor</div>
+            <div class="profile-plan">Pro Plan</div>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- ============ MAIN ============ -->
+    <main class="main">
+      <!-- Header -->
+      <header class="header">
+        <button class="mobile-menu-btn" id="mobile-menu-btn" onclick="toggleMobileSidebar()">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="3" y1="12" x2="21" y2="12"></line>
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <line x1="3" y1="18" x2="21" y2="18"></line>
+          </svg>
+        </button>
+        <h1 class="header-title" id="header-title">Inbox</h1>
+        <div class="header-search">
+          <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          <input type="text" placeholder="Search conversations, contacts, keywords..." id="global-search">
+        </div>
+        <div class="header-actions">
+          <button class="header-btn chatbot-toggle" title="Torqe AI Agent" id="btn-Torqe-agent" onclick="toggleChatbot('agent')">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a4 4 0 0 1 4 4c0 .73-.2 1.41-.54 2H18a2 2 0 0 1 2 2v1a2 2 0 0 1-2 2h-1v4a4 4 0 0 1-4 4H11a4 4 0 0 1-4-4v-4H6a2 2 0 0 1-2-2V10a2 2 0 0 1 2-2h2.54A3.96 3.96 0 0 1 8 6a4 4 0 0 1 4-4z"/><path d="M10 14v.5"/><path d="M14 14v.5"/></svg>
+            <span class="dot"></span>
+          </button>
+          <button class="header-btn chatbot-toggle" title="Negotiate Coach" id="btn-negotiate-bot" onclick="toggleChatbot('negotiate')">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.42 4.58a5.4 5.4 0 0 0-7.65 0l-.77.78-.77-.78a5.4 5.4 0 0 0-7.65 0C1.46 6.7 1.33 10.28 4 13l8 8 8-8c2.67-2.72 2.54-6.3.42-8.42z"/></svg>
+          </button>
+          <div class="header-divider"></div>
+          <button class="header-btn" title="Notifications" id="btn-notifications">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+            <span class="dot"></span>
+          </button>
+          <button class="header-btn" title="Settings" id="btn-settings">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+          </button>
+        </div>
+      </header>
+
+      <!-- Content Area -->
+      <div class="content">
+
+        <!-- ============ VIEW: INBOX ============ -->
+        <div class="view active" id="view-inbox">
+          <div class="stats-row">
+            <div class="stat-card">
+              <div class="stat-label">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><polyline points="3 9 12 15 21 9"/></svg>
+                Total Messages
+              </div>
+              <div class="stat-value">2,847</div>
+              <div class="stat-change up">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="18 15 12 9 6 15"/></svg>
+                +12.5% this week
+              </div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-label">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                Avg Response Time
+              </div>
+              <div class="stat-value">4.2<span style="font-size:0.9rem;font-weight:500;color:var(--text-secondary);">min</span></div>
+              <div class="stat-change up">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="18 15 12 9 6 15"/></svg>
+                -18% faster
+              </div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-label">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+                Active Threads
+              </div>
+              <div class="stat-value">38</div>
+              <div class="stat-change down">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="6 9 12 15 18 9"/></svg>
+                -3 from yesterday
+              </div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-label">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+                Urgent
+              </div>
+              <div class="stat-value" style="color:var(--orange);">7</div>
+              <div class="stat-change" style="color:var(--orange);">
+                Needs attention now
+              </div>
+            </div>
+          </div>
+
+          <div class="inbox-layout">
+            <!-- Message List -->
+            <div class="inbox-list card">
+              <!-- Filters removed as requested -->
+
+              <div id="inbox-messages" class="inbox-messages-list">
+                <!-- Messages injected by JS -->
+              </div>
+            </div>
+
+            <!-- Thread Panel -->
+            <div class="thread-panel card">
+              <div class="thread-panel-mobile-header">
+                <button class="back-btn" onclick="closeMobileThread()">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="15 18 9 12 15 6"></polyline>
+                  </svg>
+                </button>
+                <span style="font-weight:600;font-size:0.9rem;">Back to Inbox</span>
+              </div>
+              <div class="thread-header" id="thread-header">
+                <div class="msg-avatar" style="background:linear-gradient(135deg,#f97316,#fb923c);color:#fff;" id="thread-avatar">RN</div>
+                <div>
+                  <div class="thread-contact-name" id="thread-name">Rahul Nair</div>
+                  <div class="thread-contact-detail" id="thread-detail">WhatsApp · Last active 3m ago</div>
+                </div>
+                <div style="margin-left:auto;display:flex;gap:8px;align-items:center;">
+                  <!-- Priority badge removed -->
+                  <button class="thread-action-btn" title="Summarise conversation" onclick="inlineAiAction('summarise')">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+                    Summarise
+                  </button>
+                  <button class="thread-action-btn" title="Draft a reply" onclick="inlineAiAction('draft')">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+                    Draft Reply
+                  </button>
+                  <button class="btn-ghost" title="AI Vibe Check">🧠 Vibe</button>
+                </div>
+              </div>
+              <div class="thread-messages" id="thread-messages">
+                <!-- Messages injected by JS -->
+              </div>
+              <div class="thread-composer-wrap" style="display:flex;flex-direction:column;flex-shrink:0;">
+                <div class="thread-composer" id="thread-composer" style="display:flex;visibility:visible;opacity:1;">
+                  <div class="composer-attach-group">
+                    <button class="composer-icon-btn" title="Attach file">
+                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                    </button>
+                    <button class="composer-icon-btn" title="Photo">
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+                    </button>
+                    <button class="composer-icon-btn" title="Emoji">
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg>
+                    </button>
+                  </div>
+                  <input type="text" placeholder="Type a message..." id="thread-input" style="display:block;visibility:visible;opacity:1;flex:1;min-height:44px;">
+                  <button class="btn-primary" id="btn-smart-send" title="Smart send at optimal time" onclick="triggerSmartSend()" style="display:flex;visibility:visible;opacity:1;flex-shrink:0;">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+                    Smart Send
+                  </button>
+                </div>
+                <!-- Autopilot Bar -->
+                <div class="autopilot-bar" id="autopilot-bar">
+                  <div class="autopilot-info">
+                    <span style="font-size: 1.25rem;">✈️</span>
+                    <div>
+                      <div class="autopilot-title">Autopilot Mode Active</div>
+                      <div class="autopilot-desc" id="autopilot-desc">Sending at optimal time</div>
+                    </div>
+                  </div>
+                  <button class="autopilot-cancel" id="btn-cancel-autopilot">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>
+                    Cancel • <span class="autopilot-timer" id="autopilot-timer" style="margin-left:2px;">60</span>s
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ============ VIEW: AI TOOLS ============ -->
+        <div class="view" id="view-ai">
+          <div class="section-title">AI Intelligence Layer</div>
+
+          <div class="stats-row">
+            <div class="stat-card">
+              <div class="stat-label">AI Drafts Today</div>
+              <div class="stat-value">23</div>
+              <div class="stat-change up">+8 more than avg</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-label">Voice Notes Transcribed</div>
+              <div class="stat-value">12</div>
+              <div class="stat-change up">100% accuracy</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-label">Sentiment Alerts</div>
+              <div class="stat-value" style="color:var(--red);">3</div>
+              <div class="stat-change down">2 leads cooling</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-label">Tone Rewrites</div>
+              <div class="stat-value">17</div>
+              <div class="stat-change up">Most used: Professional</div>
+            </div>
+          </div>
+
+          <div class="ai-grid">
+            <!-- AI Reply Draft -->
+            <div class="card">
+              <div class="card-header">
+                <div class="card-title">
+                  <span>✍️</span> AI Reply Drafting
+                </div>
+                <span class="badge badge-ai">AI-POWERED</span>
+              </div>
+              <div class="card-body">
+                <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;">
+                  <div class="msg-avatar" style="background:linear-gradient(135deg,#3b82f6,#60a5fa);color:#fff;width:32px;height:32px;font-size:0.72rem;">PM</div>
+                  <div>
+                    <div style="font-weight:600;font-size:0.85rem;">Priya Mehta</div>
+                    <div style="font-size:0.72rem;color:var(--text-secondary);">Asked about pricing for enterprise plan</div>
+                  </div>
+                </div>
+                <div class="ai-draft-box">
+                  Hi Priya! Thanks for your interest in our Enterprise plan. I'd love to set up a quick call to walk you through the pricing structure — it's customized based on team size and usage. Would Thursday at 3 PM work for you?<span class="typing-cursor"></span>
+                </div>
+                <div style="display:flex;gap:8px;margin-top:14px;justify-content:flex-end;">
+                  <button class="btn-secondary">✏️ Edit</button>
+                  <button class="btn-primary">Send Draft →</button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Vibe Check -->
+            <div class="card">
+              <div class="card-header">
+                <div class="card-title">
+                  <span>🧠</span> Vibe Check
+                </div>
+                <span class="badge badge-green">LIVE</span>
+              </div>
+              <div class="card-body">
+                <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px;">
+                  <div class="msg-avatar" style="background:linear-gradient(135deg,#f97316,#fb923c);color:#fff;width:32px;height:32px;font-size:0.72rem;">RN</div>
+                  <div>
+                    <div style="font-weight:600;font-size:0.85rem;">Rahul Nair — Pre-call Brief</div>
+                    <div style="font-size:0.72rem;color:var(--text-secondary);">Call scheduled in 15 minutes</div>
+                  </div>
+                </div>
+                <ul class="vibe-list">
+                  <li class="vibe-item">
+                    <div class="vibe-icon">😤</div>
+                    <div class="vibe-text"><strong>Mood:</strong> Frustrated — mentioned "delays" and "still waiting" twice in last 3 messages. Tone is short, no pleasantries.</div>
+                  </li>
+                  <li class="vibe-item">
+                    <div class="vibe-icon">🛡️</div>
+                    <div class="vibe-text"><strong>Objections:</strong> Concerned about delivery timeline. Compared you to a competitor who "ships faster." Price is secondary.</div>
+                  </li>
+                  <li class="vibe-item">
+                    <div class="vibe-icon">🎯</div>
+                    <div class="vibe-text"><strong>Best Angle:</strong> Lead with urgency acknowledgment. Offer a concrete timeline with milestones. Avoid discounts — he wants speed, not savings.</div>
+                  </li>
+                </ul>
+              </div>
+            </div>
+
+            <!-- Sentiment Shift Alerts -->
+            <div class="card">
+              <div class="card-header">
+                <div class="card-title">
+                  <span>📉</span> Sentiment Shift Alerts
+                </div>
+                <span class="badge badge-urgent">3 ALERTS</span>
+              </div>
+              <div class="card-body">
+                <div class="sentiment-alert">
+                  <div class="sentiment-dot cold"></div>
+                  <div class="sentiment-info">
+                    <div class="sentiment-name">Vikram S. (Enterprise)</div>
+                    <div class="sentiment-shift">
+                      🔥 Hot <span class="arrow down">→</span> 🧊 Cold · Response time went from 5min to 2 days
+                    </div>
+                  </div>
+                  <button class="btn-ghost">Follow up</button>
+                </div>
+                <div class="sentiment-alert">
+                  <div class="sentiment-dot cold"></div>
+                  <div class="sentiment-info">
+                    <div class="sentiment-name">Neha G. (Startup)</div>
+                    <div class="sentiment-shift">
+                      😊 Positive <span class="arrow down">→</span> 😐 Neutral · Stopped using emojis, shorter replies
+                    </div>
+                  </div>
+                  <button class="btn-ghost">Follow up</button>
+                </div>
+                <div class="sentiment-alert">
+                  <div class="sentiment-dot warming"></div>
+                  <div class="sentiment-info">
+                    <div class="sentiment-name">Amit R. (Freelancer)</div>
+                    <div class="sentiment-shift">
+                      😐 Neutral <span class="arrow up">→</span> 🔥 Warming · Asked about pricing + shared with team
+                    </div>
+                  </div>
+                  <button class="btn-ghost">Engage</button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Tone Rewriter -->
+            <div class="card">
+              <div class="card-header">
+                <div class="card-title">
+                  <span>🎭</span> Tone Rewriter
+                </div>
+              </div>
+              <div class="card-body">
+                <div style="font-size:0.78rem;color:var(--text-secondary);margin-bottom:10px;">Select tone for your message:</div>
+                <div class="tone-options" id="tone-options">
+                  <button class="tone-btn active" data-tone="professional">💼 Professional</button>
+                  <button class="tone-btn" data-tone="casual">😎 Casual</button>
+                  <button class="tone-btn" data-tone="assertive">💪 Assertive</button>
+                  <button class="tone-btn" data-tone="warm">🤗 Warm</button>
+                </div>
+                <div class="ai-draft-box" id="tone-output" style="margin-top:14px;">
+                  <div style="font-size:0.72rem;color:var(--text-muted);margin-bottom:6px;text-transform:uppercase;letter-spacing:0.5px;">💼 Professional</div>
+                  Dear Rahul, thank you for your patience regarding the project timeline. I want to assure you that we're making strong progress — I've outlined a revised delivery schedule with clear milestones attached. Could we schedule a call this week to walk through it together?
+                </div>
+              </div>
+            </div>
+
+            <!-- Voice Transcription -->
+            <div class="card full-width">
+              <div class="card-header">
+                <div class="card-title">
+                  <span>🎤</span> Voice Note Transcription
+                </div>
+                <span class="badge badge-ai">AUTO-DETECT</span>
+              </div>
+              <div class="card-body">
+                <div style="display:flex;gap:16px;align-items:flex-start;">
+                  <div style="flex:1;">
+                    <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;">
+                      <span class="channel-icon-black">
+                        <svg class="channel-svg" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+                      </span>
+                      <div>
+                        <div style="font-weight:600;font-size:0.85rem;">Voice note from Deepa K.</div>
+                        <div style="font-size:0.72rem;color:var(--text-secondary);">1:24 duration · WhatsApp · 10 min ago</div>
+                      </div>
+                    </div>
+                    <div class="transcript-block">
+                      <div class="transcript-text">"Hey, I just got off the call with my CFO and... look, we're interested but the annual commitment is a concern. Can we maybe do quarterly? Also, my team lead wants to know if the API supports webhooks because we're building something custom. Let me know ASAP — we have a board meeting Friday."</div>
+                    </div>
+                    <div class="intent-tags" style="margin-top:12px;">
+                      <span class="tag tag-orange">💰 Pricing concern</span>
+                      <span class="tag tag-blue">🔧 Technical question</span>
+                      <span class="tag tag-purple">⏰ Time pressure</span>
+                      <span class="tag tag-green">✅ High intent</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ============ VIEW: PIPELINE ============ -->
+        <div class="view" id="view-pipeline">
+          <div class="section-title">Pipeline Management</div>
+
+          <div class="stats-row">
+            <div class="stat-card">
+              <div class="stat-label">Ghost Follow-ups Pending</div>
+              <div class="stat-value" style="color:var(--orange);">5</div>
+              <div class="stat-change">Awaiting approval</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-label">Queued Messages</div>
+              <div class="stat-value">12</div>
+              <div class="stat-change up">Optimized send times</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-label">Scam Alerts</div>
+              <div class="stat-value" style="color:var(--red);">2</div>
+              <div class="stat-change down">Flagged today</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-label">Follow-up Rate</div>
+              <div class="stat-value">94<span style="font-size:0.9rem;font-weight:500;color:var(--text-secondary);">%</span></div>
+              <div class="stat-change up">+6% this month</div>
+            </div>
+          </div>
+
+          <div class="pipeline-grid">
+            <!-- Ghost Follow-ups -->
+            <div class="card full-width">
+              <div class="card-header">
+                <div class="card-title">
+                  <span>👻</span> Ghost Follow-up Drafts
+                </div>
+                <span class="badge badge-high">48HR+ SILENCE</span>
+              </div>
+              <div class="card-body">
+                <div class="followup-item">
+                  <div class="followup-avatar" style="background:linear-gradient(135deg,#8b5cf6,#a78bfa);color:#fff;">VS</div>
+                  <div class="followup-info">
+                    <div class="followup-name">Vikram Singh</div>
+                    <div class="followup-detail">Last message: "Let me check with my team" — sent via LinkedIn</div>
+                  </div>
+                  <div class="followup-silence">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                    72h silent
+                  </div>
+                  <div class="followup-actions">
+                    <button class="btn-secondary">Preview</button>
+                    <button class="btn-primary">Approve & Send</button>
+                  </div>
+                </div>
+                <div class="followup-item">
+                  <div class="followup-avatar" style="background:linear-gradient(135deg,#ec4899,#f472b6);color:#fff;">NG</div>
+                  <div class="followup-info">
+                    <div class="followup-name">Neha Gupta</div>
+                    <div class="followup-detail">Last message: "Will get back to you on the proposal" — sent via Gmail</div>
+                  </div>
+                  <div class="followup-silence">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                    56h silent
+                  </div>
+                  <div class="followup-actions">
+                    <button class="btn-secondary">Preview</button>
+                    <button class="btn-primary">Approve & Send</button>
+                  </div>
+                </div>
+                <div class="followup-item">
+                  <div class="followup-avatar" style="background:linear-gradient(135deg,#06b6d4,#22d3ee);color:#fff;">KR</div>
+                  <div class="followup-info">
+                    <div class="followup-name">Karan Reddy</div>
+                    <div class="followup-detail">Last message: "Interesting, let me think about it" — sent via WhatsApp</div>
+                  </div>
+                  <div class="followup-silence">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                    48h silent
+                  </div>
+                  <div class="followup-actions">
+                    <button class="btn-secondary">Preview</button>
+                    <button class="btn-primary">Approve & Send</button>
+                  </div>
+                </div>
+                <div class="followup-item">
+                  <div class="followup-avatar" style="background:linear-gradient(135deg,#eab308,#facc15);color:#111;">SS</div>
+                  <div class="followup-info">
+                    <div class="followup-name">Simran Sethi</div>
+                    <div class="followup-detail">Last message: "Can you send me the case studies?" — sent via Telegram</div>
+                  </div>
+                  <div class="followup-silence">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                    50h silent
+                  </div>
+                  <div class="followup-actions">
+                    <button class="btn-secondary">Preview</button>
+                    <button class="btn-primary">Approve & Send</button>
+                  </div>
+                </div>
+                <div class="followup-item">
+                  <div class="followup-avatar" style="background:linear-gradient(135deg,#22c55e,#4ade80);color:#fff;">AP</div>
+                  <div class="followup-info">
+                    <div class="followup-name">Anil Patel</div>
+                    <div class="followup-detail">Last message: Read receipt only, no reply — sent via Instagram</div>
+                  </div>
+                  <div class="followup-silence">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                    96h silent
+                  </div>
+                  <div class="followup-actions">
+                    <button class="btn-secondary">Preview</button>
+                    <button class="btn-primary">Approve & Send</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Smart Queue -->
+            <div class="card">
+              <div class="card-header">
+                <div class="card-title">
+                  <span>⏰</span> Smart Queue
+                </div>
+                <span class="badge badge-green">OPTIMIZED</span>
+              </div>
+              <div class="card-body">
+                <div class="queue-item">
+                  <div class="queue-time">9:15 AM</div>
+                  <div class="queue-info">
+                    <div class="queue-name">Priya Mehta</div>
+                    <div class="queue-channel">Gmail · Enterprise pricing follow-up</div>
+                  </div>
+                  <span class="channel-icon-black queue-channel-icon">
+                    <svg class="channel-svg" viewBox="0 0 24 24" fill="currentColor"><path d="M24 5.457v13.909c0 .904-.732 1.636-1.636 1.636h-3.819V11.73L12 16.64l-6.545-4.91v9.273H1.636A1.636 1.636 0 0 1 0 19.366V5.457c0-2.023 2.309-3.178 3.927-1.964L5.455 4.64 12 9.548l6.545-4.91 1.528-1.145C21.69 2.28 24 3.434 24 5.457z"/></svg>
+                  </span>
+                </div>
+                <div class="queue-item">
+                  <div class="queue-time">10:30 AM</div>
+                  <div class="queue-info">
+                    <div class="queue-name">Deepa Krishnan</div>
+                    <div class="queue-channel">WhatsApp · API webhook details</div>
+                  </div>
+                  <span class="channel-icon-black queue-channel-icon">
+                    <svg class="channel-svg" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+                  </span>
+                </div>
+                <div class="queue-item">
+                  <div class="queue-time">11:45 AM</div>
+                  <div class="queue-info">
+                    <div class="queue-name">Rahul Nair</div>
+                    <div class="queue-channel">WhatsApp · Revised timeline proposal</div>
+                  </div>
+                  <span class="channel-icon-black queue-channel-icon">
+                    <svg class="channel-svg" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+                  </span>
+                </div>
+                <div class="queue-item">
+                  <div class="queue-time">2:00 PM</div>
+                  <div class="queue-info">
+                    <div class="queue-name">Amit Rao</div>
+                    <div class="queue-channel">LinkedIn · Connection follow-up</div>
+                  </div>
+                  <span class="channel-icon-black queue-channel-icon">
+                    <svg class="channel-svg" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+                  </span>
+                </div>
+                <div class="queue-item">
+                  <div class="queue-time">4:30 PM</div>
+                  <div class="queue-info">
+                    <div class="queue-name">Simran Sethi</div>
+                    <div class="queue-channel">Telegram · Case studies attachment</div>
+                  </div>
+                  <span class="channel-icon-black queue-channel-icon">
+                    <svg class="channel-svg" viewBox="0 0 24 24" fill="currentColor"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Scam / Deepfake Detection -->
+            <div class="card">
+              <div class="card-header">
+                <div class="card-title">
+                  <span>🛡️</span> Scam & Deepfake Detection
+                </div>
+                <span class="badge badge-urgent">2 FLAGGED</span>
+              </div>
+              <div class="card-body">
+                <div class="alert-item">
+                  <div class="alert-icon">⚠️</div>
+                  <div class="alert-content">
+                    <div class="alert-title">Suspicious Payment Request</div>
+                    <div class="alert-desc">Message from "Rajesh CFO" on WhatsApp requesting an urgent wire transfer of ₹4.5L. Profile photo appears AI-generated. Account created 2 days ago.</div>
+                    <div style="display:flex;gap:8px;margin-top:10px;">
+                      <button class="btn-secondary" style="font-size:0.75rem;">View Details</button>
+                      <button class="btn-ghost" style="color:var(--red);font-size:0.75rem;">Block & Report</button>
+                    </div>
+                  </div>
+                </div>
+                <div class="alert-item">
+                  <div class="alert-icon">🤖</div>
+                  <div class="alert-content">
+                    <div class="alert-title">Potential Deepfake Voice Note</div>
+                    <div class="alert-desc">Audio message from "Vikram (Boss)" on Telegram doesn't match voice signature on file. 87% deepfake confidence score.</div>
+                    <div style="display:flex;gap:8px;margin-top:10px;">
+                      <button class="btn-secondary" style="font-size:0.75rem;">Analyze Audio</button>
+                      <button class="btn-ghost" style="color:var(--red);font-size:0.75rem;">Flag as Fraud</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ============ VIEW: NEGOTIATE COACH ============ -->
+        <div class="view" id="view-negotiate">
+          <div class="section-title">Negotiate Coach — Live Deal Intelligence</div>
+
+          <div class="stats-row">
+            <div class="stat-card">
+              <div class="stat-label">Active Deals</div>
+              <div class="stat-value">8</div>
+              <div class="stat-change up">3 closing this week</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-label">Avg Close Rate</div>
+              <div class="stat-value">67<span style="font-size:0.9rem;font-weight:500;color:var(--text-secondary);">%</span></div>
+              <div class="stat-change up">+5% with AI coaching</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-label">Counter-offers Made</div>
+              <div class="stat-value">14</div>
+              <div class="stat-change up">9 accepted</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-label">Revenue at Stake</div>
+              <div class="stat-value">₹24<span style="font-size:0.9rem;font-weight:500;color:var(--text-secondary);">L</span></div>
+              <div class="stat-change">Across all active deals</div>
+            </div>
+          </div>
+
+          <div class="negotiate-grid">
+            <!-- Left: Deal Coaching -->
+            <div style="display:flex;flex-direction:column;gap:16px;">
+              <!-- Live Conversation -->
+              <div class="card">
+                <div class="card-header">
+                  <div class="card-title">
+                    <span>💬</span> Live Deal — Rahul Nair
+                  </div>
+                  <span class="badge badge-high">NEGOTIATING</span>
+                </div>
+                <div class="card-body">
+                  <div class="deal-chat">
+                    <div class="deal-msg buyer">
+                      <span class="label">Buyer — Rahul</span>
+                      Your proposal came in at ₹6L for the annual plan. We were expecting something closer to ₹4.5L. Can you work on the pricing?
+                    </div>
+                    <div class="coach-insight">
+                      <span class="icon">🧠</span>
+                      <div><strong>AI Coach:</strong> He's anchoring low. Don't counter immediately — acknowledge his budget first, then reframe around value delivered. Avoid discounting more than 15%.</div>
+                    </div>
+                    <div class="deal-msg seller">
+                      <span class="label">You</span>
+                      I completely understand budget constraints, Rahul. Let me show you the ROI breakdown — our clients in your segment typically see 3x returns within the first quarter.
+                    </div>
+                    <div class="deal-msg buyer">
+                      <span class="label">Buyer — Rahul</span>
+                      That's fair. But we've had vendors promise ROI before. What's different with Torqe?
+                    </div>
+                    <div class="coach-insight">
+                      <span class="icon">🧠</span>
+                      <div><strong>AI Coach:</strong> Great opening — he's engaged, not pushing back on price anymore. Share a specific case study now. Mention a client in his industry if possible.</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Strategy Tips -->
+              <div class="card">
+                <div class="card-header">
+                  <div class="card-title">
+                    <span>🎯</span> Real-time Strategy
+                  </div>
+                </div>
+                <div class="card-body">
+                  <div class="tip-item">
+                    <div class="tip-number">1</div>
+                    <div class="tip-content">
+                      <div class="tip-title">Use the "Feel, Felt, Found" technique</div>
+                      <div class="tip-desc">Acknowledge his concern, relate to other clients who felt the same, then share what they found after adopting. Builds trust without discounting.</div>
+                    </div>
+                  </div>
+                  <div class="tip-item">
+                    <div class="tip-number">2</div>
+                    <div class="tip-content">
+                      <div class="tip-title">Offer quarterly billing as a concession</div>
+                      <div class="tip-desc">Instead of reducing price, offer to break the annual fee into quarterly payments. Preserves deal value while reducing perceived risk.</div>
+                    </div>
+                  </div>
+                  <div class="tip-item">
+                    <div class="tip-number">3</div>
+                    <div class="tip-content">
+                      <div class="tip-title">Create urgency with limited-time add-on</div>
+                      <div class="tip-desc">Offer free onboarding (₹50K value) if they sign by Friday. Time-bounded incentive without touching the core price.</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Right: Score + Counter-Offers -->
+            <div style="display:flex;flex-direction:column;gap:16px;">
+              <!-- Close Likelihood -->
+              <div class="card">
+                <div class="card-header">
+                  <div class="card-title">
+                    <span>📊</span> Close Likelihood
+                  </div>
+                </div>
+                <div class="card-body">
+                  <div class="gauge-container">
+                    <div class="gauge-ring">
+                      <svg class="gauge-svg" viewBox="0 0 160 160">
+                        <circle class="gauge-bg" cx="80" cy="80" r="65"/>
+                        <circle class="gauge-progress" cx="80" cy="80" r="65"
+                          stroke-dasharray="408.4"
+                          stroke-dashoffset="134.8"
+                          id="gauge-circle"/>
+                      </svg>
+                      <div class="gauge-value" style="position:absolute;" id="gauge-value">67%</div>
+                    </div>
+                    <div class="gauge-label">Based on conversation signals, response patterns, and deal history</div>
+                  </div>
+                  <div style="display:flex;gap:12px;margin-top:8px;">
+                    <div style="flex:1;text-align:center;padding:8px;background:var(--black);border-radius:var(--radius-md);border:1px solid var(--border);">
+                      <div style="font-size:0.68rem;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.5px;">Engagement</div>
+                      <div style="font-weight:700;color:var(--green);margin-top:4px;">High</div>
+                    </div>
+                    <div style="flex:1;text-align:center;padding:8px;background:var(--black);border-radius:var(--radius-md);border:1px solid var(--border);">
+                      <div style="font-size:0.68rem;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.5px;">Objections</div>
+                      <div style="font-weight:700;color:var(--orange);margin-top:4px;">2 Open</div>
+                    </div>
+                    <div style="flex:1;text-align:center;padding:8px;background:var(--black);border-radius:var(--radius-md);border:1px solid var(--border);">
+                      <div style="font-size:0.68rem;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.5px;">Timeline</div>
+                      <div style="font-weight:700;color:var(--cyan);margin-top:4px;">This week</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Counter-Offer Suggestions -->
+              <div class="card">
+                <div class="card-header">
+                  <div class="card-title">
+                    <span>💡</span> Counter-Offer Suggestions
+                  </div>
+                </div>
+                <div class="card-body">
+                  <div class="counter-card">
+                    <div class="counter-label">Recommended Counter</div>
+                    <div class="counter-value" style="color:var(--orange);">₹5.4L / year</div>
+                    <div class="counter-reason">10% discount from original ₹6L. Position as "early adopter rate." Includes free onboarding. Best balance of margin and close probability.</div>
+                    <button class="btn-primary" style="margin-top:10px;width:100%;justify-content:center;">Use This Counter →</button>
+                  </div>
+                  <div class="counter-card">
+                    <div class="counter-label">Conservative Option</div>
+                    <div class="counter-value">₹5.7L / year</div>
+                    <div class="counter-reason">5% discount. Add an extra quarter of premium support free. Protects margin. Works if buyer engagement stays high.</div>
+                  </div>
+                  <div class="counter-card">
+                    <div class="counter-label">Aggressive Close</div>
+                    <div class="counter-value">₹4.8L / year</div>
+                    <div class="counter-reason">20% discount. Only use if the deal is slipping. Requires 2-year commitment. Locks in long-term revenue.</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div><!-- /content -->
+    </main>
+
+    <!-- ============ AI CHATBOT SLIDE-OUT PANEL ============ -->
+    <div class="chatbot-overlay" id="chatbot-overlay" onclick="closeChatbot()"></div>
+    <aside class="chatbot-panel" id="chatbot-panel">
+      <!-- Panel Header with Tabs -->
+      <div class="chatbot-header">
+        <div class="chatbot-tabs">
+          <button class="chatbot-tab active" id="tab-agent" onclick="switchChatbotTab('agent')">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a4 4 0 0 1 4 4c0 .73-.2 1.41-.54 2H18a2 2 0 0 1 2 2v1a2 2 0 0 1-2 2h-1v4a4 4 0 0 1-4 4H11a4 4 0 0 1-4-4v-4H6a2 2 0 0 1-2-2V10a2 2 0 0 1 2-2h2.54A3.96 3.96 0 0 1 8 6a4 4 0 0 1 4-4z"/></svg>
+            Torqe Agent
+          </button>
+          <button class="chatbot-tab" id="tab-negotiate" onclick="switchChatbotTab('negotiate')">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.42 4.58a5.4 5.4 0 0 0-7.65 0l-.77.78-.77-.78a5.4 5.4 0 0 0-7.65 0C1.46 6.7 1.33 10.28 4 13l8 8 8-8c2.67-2.72 2.54-6.3.42-8.42z"/></svg>
+            Negotiate Coach
+          </button>
+        </div>
+        <button class="chatbot-close" onclick="closeChatbot()" title="Close">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+
+      <!-- AI Tool Action Buttons -->
+      <div class="chatbot-tools">
+        <button class="chatbot-tool-btn" onclick="chatbotAction('summarise')">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+          Summarise
+        </button>
+        <button class="chatbot-tool-btn" onclick="chatbotAction('followup')">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+          Follow-up
+        </button>
+        <button class="chatbot-tool-btn" onclick="chatbotAction('smartsend')">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+          Smart Send
+        </button>
+        <button class="chatbot-tool-btn" onclick="chatbotAction('draft')">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+          Draft Reply
+        </button>
+        <button class="chatbot-tool-btn" onclick="chatbotAction('vibecheck')">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg>
+          Vibe Check
+        </button>
+        <button class="chatbot-tool-btn" onclick="chatbotAction('tone')">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          Tone Rewrite
+        </button>
+      </div>
+
+      <!-- Chat Messages Area -->
+      <div class="chatbot-messages" id="chatbot-messages">
+        <!-- Torqe Agent initial messages -->
+        <div class="chatbot-msg bot">
+          <div class="chatbot-msg-avatar">🤖</div>
+          <div class="chatbot-msg-content">
+            <div class="chatbot-msg-name">Torqe Agent</div>
+            <div class="chatbot-msg-text">Hi Arjun! I'm your Torqe AI Agent. I can help you with your inbox, draft replies, summarise conversations, and manage follow-ups. What would you like me to do?</div>
+            <div class="chatbot-msg-time">Just now</div>
+          </div>
+        </div>
+        <div class="chatbot-msg bot">
+          <div class="chatbot-msg-avatar">🤖</div>
+          <div class="chatbot-msg-content">
+            <div class="chatbot-msg-name">Torqe Agent</div>
+            <div class="chatbot-msg-text">💡 <strong>Quick tip:</strong> Use the action buttons above to run AI tools on your current conversation. Or just ask me anything!</div>
+            <div class="chatbot-msg-time">Just now</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Chat Input -->
+      <div class="chatbot-input-area">
+        <input type="text" class="chatbot-input" id="chatbot-input" placeholder="Ask Torqe anything..." onkeydown="if(event.key==='Enter')sendChatbotMessage()">
+        <button class="chatbot-send-btn" onclick="sendChatbotMessage()">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+        </button>
+      </div>
+    </aside>
+
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
