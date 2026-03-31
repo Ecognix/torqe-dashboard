@@ -62,12 +62,30 @@ html {
   -moz-osx-font-smoothing: grayscale;
 }
 
+html, body {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  position: relative;
+  -webkit-overflow-scrolling: touch;
+}
+
 body {
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-  background: var(--black);
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  background-color: var(--black);
   color: var(--text-primary);
-  overflow: hidden;
-  height: 100vh;
+  line-height: 1.6;
+  display: flex;
+  min-height: 100vh;
+}
+
+body.sidebar-open,
+body.mobile-viewing-thread {
+  overflow: hidden !important;
+  position: fixed;
+  width: 100%;
 }
 
 /* --- Scrollbar --- */
@@ -279,6 +297,9 @@ body {
   padding: 0 28px;
   gap: 16px;
   background: var(--surface);
+  position: sticky;
+  top: 0;
+  z-index: 90;
 }
 
 .header-title {
