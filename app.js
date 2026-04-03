@@ -330,6 +330,11 @@ function selectMessage(id) {
     if (parseInt(el.dataset.id) === id) el.classList.add('active');
   });
   renderThread(id);
+  
+  // Show mobile thread view on mobile
+  if (window.innerWidth <= 768) {
+    showMobileThread();
+  }
 }
 
 function renderThread(id) {
