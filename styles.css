@@ -581,12 +581,12 @@ body.mobile-viewing-thread {
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
+  overflow: hidden;
 }
 
 .channel-logo svg {
-  width: 14px;
-  height: 14px;
-  color: #ffffff;
+  width: 16px;
+  height: 16px;
 }
 
 .channel-icon-black {
@@ -598,12 +598,12 @@ body.mobile-viewing-thread {
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
+  overflow: hidden;
 }
 
 .channel-icon-black .channel-svg {
-  width: 14px;
-  height: 14px;
-  color: #ffffff;
+  width: 16px;
+  height: 16px;
 }
 
 .msg-meta .channel-icon-black {
