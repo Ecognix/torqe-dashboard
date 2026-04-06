@@ -66,6 +66,11 @@ body {
   }
 }
 
+/* Fix input text color - body color is light, inputs need dark text */
+input, select, textarea {
+  color: #0f172a;
+}
+
 ::-webkit-scrollbar {
   width: 0px;
   display: none;

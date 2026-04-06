@@ -1,7 +1,7 @@
  'use client';
 
 import { useState, useEffect, useRef } from 'react';
-import { X, Send, FileText, ArrowRight, Pencil, Smile, Zap, Star, Bot, TrendingUp } from 'lucide-react';
+import { X, Send, FileText, ArrowRight, Pencil, Smile, Zap, Star, Bot, TrendingUp, Mic, Plus, ChevronDown } from 'lucide-react';
 
 interface ChatbotPanelProps {
   isOpen: boolean;
@@ -34,6 +34,9 @@ export default function ChatbotPanel({ isOpen, onClose, tab, onTabChange }: Chat
   const [messages, setMessages] = useState<ChatMessage[]>(initialAgentMessages);
   const [input, setInput] = useState('');
   const [isTyping, setIsTyping] = useState(false);
+  const [selectedModel, setSelectedModel] = useState('TorqeAI Pro');
+  const [showModelDropdown, setShowModelDropdown] = useState(false);
+  const modelRef = useRef<HTMLDivElement>(null);
   const [activeTab, setActiveTab] = useState<'agent' | 'negotiate'>(tab);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
@@ -45,6 +48,16 @@ export default function ChatbotPanel({ isOpen, onClose, tab, onTabChange }: Chat
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages]);
+
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (modelRef.current && !modelRef.current.contains(e.target as Node)) {
+        setShowModelDropdown(false);
+      }
+    };
+    if (showModelDropdown) document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, [showModelDropdown]);
 
   const generateBotResponse = (userText: string, currentTab: 'agent' | 'negotiate'): string => {
     const lower = userText.toLowerCase();
@@ -281,20 +294,58 @@ export default function ChatbotPanel({ isOpen, onClose, tab, onTabChange }: Chat
         <div ref={messagesEndRef} />
       </div>
 
-      {/* Input */}
-      <div className="p-3 lg:p-4 border-t border-slate-200">
+      {/* Model Selector + Input */}
+      <div className="p-3 lg:p-4 border-t border-slate-200 space-y-2">
+        {/* AI Model Selector */}
+        <div className="relative" ref={modelRef}>
+          <button
+            onClick={() => setShowModelDropdown(!showModelDropdown)}
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-slate-50 border border-slate-200 text-xs font-medium text-slate-600 hover:bg-slate-100 transition-colors"
+          >
+            <img src="/logo.png" alt="" className="w-3.5 h-3.5" />
+            {selectedModel}
+            <ChevronDown className="w-3 h-3 text-slate-400" />
+          </button>
+          {showModelDropdown && (
+            <div className="absolute bottom-full left-0 mb-2 w-52 bg-white border border-slate-200 rounded-xl shadow-xl z-10 overflow-hidden animate-scale-in">
+              {['TorqeAI Pro', 'TorqeAI Lite', 'GPT-4o', 'Claude Sonnet'].map((model) => (
+                <button
+                  key={model}
+                  onClick={() => { setSelectedModel(model); setShowModelDropdown(false); }}
+                  className={`w-full flex items-center gap-2.5 px-4 py-2.5 text-sm text-left transition-colors ${
+                    selectedModel === model ? 'bg-orange/5 text-orange font-medium' : 'text-slate-700 hover:bg-slate-50'
+                  }`}
+                >
+                  <img src="/logo.png" alt="" className="w-4 h-4" />
+                  {model}
+                  {selectedModel === model && <span className="ml-auto text-orange text-xs">✓</span>}
+                </button>
+              ))}
+            </div>
+          )}
+        </div>
+
+        {/* Input Row */}
         <div className="flex items-center gap-2">
-          <input
-            type="text"
-            value={input}
-            onChange={(e) => setInput(e.target.value)}
-            onKeyDown={(e) => e.key === 'Enter' && handleSend()}
-            placeholder={activeTab === 'agent' ? 'Ask Torqe anything...' : 'Ask about deal strategy...'}
-            className="flex-1 bg-slate-100 rounded-full px-4 py-3 lg:py-3 text-base lg:text-sm placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-orange/50"
-          />
+          <button className="p-2.5 rounded-full bg-slate-100 text-slate-500 hover:bg-slate-200 hover:text-slate-700 transition-colors flex-shrink-0">
+            <Plus className="w-4 h-4" />
+          </button>
+          <div className="flex-1 relative">
+            <input
+              type="text"
+              value={input}
+              onChange={(e) => setInput(e.target.value)}
+              onKeyDown={(e) => e.key === 'Enter' && handleSend()}
+              placeholder={activeTab === 'agent' ? 'Ask Torqe anything...' : 'Ask about deal strategy...'}
+              className="w-full bg-slate-100 rounded-full px-4 pr-11 py-3 lg:py-3 text-base lg:text-sm placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-orange/50"
+            />
+            <button className="absolute right-3 top-1/2 -translate-y-1/2 p-1.5 rounded-full hover:bg-slate-200 transition-colors text-slate-400 hover:text-orange">
+              <Mic className="w-4 h-4" />
+            </button>
+          </div>
           <button
             onClick={handleSend}
-            className="p-3 rounded-full bg-orange text-white hover:bg-orange-500 transition-colors"
+            className="p-3 rounded-full bg-orange text-white hover:bg-orange-500 transition-colors flex-shrink-0"
           >
             <Send className="w-4 h-4" />
           </button>

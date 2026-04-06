@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect, useRef } from 'react';
-import { FileText, PenLine, Brain, Paperclip, Image, Smile, Zap, X, Send, Clock, Plane, ArrowLeft } from 'lucide-react';
+import { FileText, PenLine, Brain, Paperclip, Image, Smile, Zap, X, Send, Clock, Plane, ArrowLeft, Mic } from 'lucide-react';
 import { messages, inboxStats } from '@/lib/data';
 import { getChannelIcon } from '@/lib/icons';
 import StatCard from '@/components/StatCard';
@@ -314,14 +314,19 @@ export default function InboxView({ onChatbotAction, onProfileClick }: InboxView
                   <Smile className="w-4 h-4" />
                 </button>
               </div>
-              <input
-                type="text"
-                value={inputValue}
-                onChange={(e) => setInputValue(e.target.value)}
-                onKeyDown={(e) => e.key === 'Enter' && handleSend()}
-                placeholder="Type a message..."
-                className="flex-1 bg-slate-100 rounded-full px-4 lg:px-5 py-3 lg:py-3 text-base lg:text-sm placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-orange/50"
-              />
+              <div className="flex-1 relative">
+                <input
+                  type="text"
+                  value={inputValue}
+                  onChange={(e) => setInputValue(e.target.value)}
+                  onKeyDown={(e) => e.key === 'Enter' && handleSend()}
+                  placeholder="Type a message..."
+                  className="w-full bg-slate-100 rounded-full px-4 lg:px-5 pr-11 py-3 lg:py-3 text-base lg:text-sm placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-orange/50"
+                />
+                <button className="absolute right-3 top-1/2 -translate-y-1/2 p-1.5 rounded-full hover:bg-slate-200 transition-colors text-slate-400 hover:text-orange">
+                  <Mic className="w-4 h-4" />
+                </button>
+              </div>
               <button 
                 onClick={triggerAutopilot}
                 disabled={!inputValue.trim() || autopilotActive}
