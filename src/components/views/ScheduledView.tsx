@@ -58,7 +58,7 @@ export default function ScheduledView() {
                 </div>
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-2 mb-1 flex-wrap">
-                    <span className="font-semibold text-sm text-slate-900">{msg.name}</span>
+                    <span className="font-semibold text-base lg:text-sm text-slate-900">{msg.name}</span>
                     <span className="w-6 h-6 p-1 bg-slate-900 rounded text-white flex items-center justify-center flex-shrink-0">
                       {getChannelIcon(msg.channel)}
                     </span>
@@ -70,9 +70,9 @@ export default function ScheduledView() {
                       {msg.status === 'scheduled' ? 'Scheduled' : 'Pending'}
                     </span>
                   </div>
-                  <p className="text-sm text-slate-500 truncate">{msg.message}</p>
+                  <p className="text-sm lg:text-sm text-slate-500 truncate">{msg.message}</p>
                   <div className="flex items-center justify-between mt-2 lg:hidden">
-                    <div className="text-xs font-semibold text-orange">{msg.sendAt} · {msg.day}</div>
+                    <div className="text-sm lg:text-xs font-semibold text-orange">{msg.sendAt} · {msg.day}</div>
                     <div className="flex gap-1">
                       <button className="p-1.5 rounded-lg hover:bg-slate-100 text-slate-400"><Eye className="w-3.5 h-3.5" /></button>
                       <button className="p-1.5 rounded-lg hover:bg-slate-100 text-slate-400"><Trash2 className="w-3.5 h-3.5" /></button>

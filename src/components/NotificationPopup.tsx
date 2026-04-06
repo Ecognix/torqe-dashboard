@@ -59,7 +59,7 @@ export default function NotificationPopup({ isOpen, onClose, onViewAll }: Notifi
       <div className="flex items-center justify-between p-4 border-b border-slate-100">
         <div className="flex items-center gap-2">
           <Bell className="w-4 h-4 text-slate-600" />
-          <span className="font-semibold text-sm text-slate-900">Notifications</span>
+          <span className="font-semibold text-base lg:text-sm text-slate-900">Notifications</span>
           {unreadNotifications.length > 0 && (
             <span className="px-2 py-0.5 rounded-full text-xs font-medium bg-slate-100 text-slate-600">
               {unreadNotifications.length} new
@@ -92,9 +92,9 @@ export default function NotificationPopup({ isOpen, onClose, onViewAll }: Notifi
                   {notification.avatar}
                 </div>
                 <div className="flex-1 min-w-0">
-                  <p className="text-sm font-medium text-slate-900 truncate">{notification.title}</p>
-                  <p className="text-xs text-slate-500 mt-0.5 truncate">{notification.description}</p>
-                  <p className="text-xs text-slate-400 mt-1">{notification.time}</p>
+                  <p className="text-base lg:text-sm font-medium text-slate-900 truncate">{notification.title}</p>
+                  <p className="text-sm lg:text-xs text-slate-500 mt-0.5 truncate">{notification.description}</p>
+                  <p className="text-sm lg:text-xs text-slate-400 mt-1">{notification.time}</p>
                 </div>
               </div>
             </div>

@@ -61,7 +61,7 @@ export default function NotificationSidebar({ isOpen, onClose }: NotificationSid
       <div className="flex items-center justify-between p-4 border-b border-slate-200">
         <div className="flex items-center gap-3">
           <Bell className="w-5 h-5 text-slate-600" />
-          <h3 className="font-bold text-slate-900">Notifications</h3>
+          <h3 className="font-bold text-slate-900 text-base lg:text-sm">Notifications</h3>
           {unreadCount > 0 && (
             <span className="px-2 py-0.5 rounded-full text-xs font-medium bg-slate-100 text-slate-600">
               {unreadCount} unread
@@ -81,7 +81,7 @@ export default function NotificationSidebar({ isOpen, onClose }: NotificationSid
         <div className="flex gap-2">
           <button
             onClick={() => setFilter('all')}
-            className={`px-4 py-1.5 rounded-full text-xs font-medium transition-all ${
+            className={`px-4 py-2 lg:py-1.5 rounded-full text-sm lg:text-xs font-medium transition-all ${
               filter === 'all'
                 ? 'bg-slate-900 text-white'
                 : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
@@ -91,7 +91,7 @@ export default function NotificationSidebar({ isOpen, onClose }: NotificationSid
           </button>
           <button
             onClick={() => setFilter('unread')}
-            className={`px-4 py-1.5 rounded-full text-xs font-medium transition-all ${
+            className={`px-4 py-2 lg:py-1.5 rounded-full text-sm lg:text-xs font-medium transition-all ${
               filter === 'unread'
                 ? 'bg-slate-900 text-white'
                 : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
@@ -136,14 +136,14 @@ export default function NotificationSidebar({ isOpen, onClose }: NotificationSid
                 </div>
                 <div className="flex-1 min-w-0">
                   <div className="flex items-start justify-between gap-2">
-                    <p className={`text-sm font-medium ${!notification.read ? 'text-slate-900' : 'text-slate-700'}`}>
+                    <p className={`text-base lg:text-sm font-medium ${!notification.read ? 'text-slate-900' : 'text-slate-700'}`}>
                       {notification.title}
                     </p>
                     {!notification.read && (
                       <span className="w-2 h-2 bg-slate-900 rounded-full flex-shrink-0 mt-1" />
                     )}
                   </div>
-                  <p className="text-xs text-slate-500 mt-1 leading-relaxed">
+                  <p className="text-sm lg:text-xs text-slate-500 mt-1 leading-relaxed">
                     {notification.description}
                   </p>
                   <div className="flex items-center gap-2 mt-2">

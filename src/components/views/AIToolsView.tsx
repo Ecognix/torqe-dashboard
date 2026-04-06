@@ -60,8 +60,8 @@ export default function AIToolsView() {
                 PM
               </div>
               <div>
-                <p className="font-semibold text-sm text-slate-900">Priya Mehta</p>
-                <p className="text-xs text-slate-500">Asked about pricing for enterprise plan</p>
+                <p className="font-semibold text-base lg:text-sm text-slate-900">Priya Mehta</p>
+                <p className="text-sm lg:text-xs text-slate-500">Asked about pricing for enterprise plan</p>
               </div>
             </div>
             <div className="bg-slate-900 rounded-xl p-4 text-sm text-slate-300 leading-relaxed">
@@ -95,8 +95,8 @@ export default function AIToolsView() {
                 RN
               </div>
               <div>
-                <p className="font-semibold text-sm text-slate-900">Rahul Nair - Pre-call Brief</p>
-                <p className="text-xs text-slate-500">Call scheduled in 15 minutes</p>
+                <p className="font-semibold text-base lg:text-sm text-slate-900">Rahul Nair - Pre-call Brief</p>
+                <p className="text-sm lg:text-xs text-slate-500">Call scheduled in 15 minutes</p>
               </div>
             </div>
             <div className="space-y-3">
@@ -139,8 +139,8 @@ export default function AIToolsView() {
                   alert.status === 'warming' ? 'bg-orange' : 'bg-green-500'
                 }`} />
                 <div className="flex-1 min-w-0">
-                  <p className="font-semibold text-sm text-slate-900">{alert.name}</p>
-                  <p className="text-xs text-slate-500">
+                  <p className="font-semibold text-base lg:text-sm text-slate-900">{alert.name}</p>
+                  <p className="text-sm lg:text-xs text-slate-500">
                     {alert.from} <span className="font-bold mx-1">-</span> {alert.to} - {alert.reason}
                   </p>
                 </div>

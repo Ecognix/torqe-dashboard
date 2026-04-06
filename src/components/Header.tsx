@@ -161,20 +161,20 @@ export default function Header({ title, onMenuClick, onChatbotToggle, chatbotTab
   };
 
   return (
-    <header className="relative h-14 min-h-[56px] lg:h-16 lg:min-h-[64px] border-b border-slate-200 bg-white flex items-center px-3 lg:px-6 gap-2 lg:gap-4 sticky top-0 z-40">
+    <header className="relative h-16 min-h-[64px] lg:h-16 lg:min-h-[64px] border-b border-slate-200 bg-white flex items-center px-3 lg:px-6 gap-2 lg:gap-4 sticky top-0 z-40">
       {/* Mobile Menu Button */}
       <button 
         onClick={onMenuClick}
-        className="lg:hidden p-2 rounded-lg hover:bg-slate-100 transition-colors text-slate-600"
+        className={`lg:hidden p-2.5 rounded-lg hover:bg-slate-100 transition-colors text-slate-600 ${searchFocused ? 'hidden' : ''}`}
       >
-        <Menu className="w-5 h-5" />
+        <Menu className="w-6 h-6 lg:w-5 lg:h-5" />
       </button>
 
       {/* Title */}
       <h1 className="hidden md:block text-lg font-bold text-slate-900 whitespace-nowrap">{title}</h1>
 
       {/* Smart AI Search */}
-      <div className="flex-1 max-w-lg ml-0 md:ml-4" ref={searchRef}>
+      <div className={`flex-1 max-w-lg ml-0 md:ml-4 ${searchFocused ? 'absolute inset-x-3 lg:relative lg:inset-x-auto z-10' : ''}`} ref={searchRef}>
         <div className="relative">
           {/* Search icon or spinning logo */}
           <div className="absolute left-3 top-1/2 -translate-y-1/2 w-6 h-6 flex items-center justify-center">
@@ -190,7 +190,7 @@ export default function Header({ title, onMenuClick, onChatbotToggle, chatbotTab
             onChange={(e) => setSearchQuery(e.target.value)}
             onFocus={() => setSearchFocused(true)}
             placeholder={searchFocused ? 'Ask TorqeAI anything...' : typedPlaceholder}
-            className={`w-full border rounded-full py-2 lg:py-2.5 pl-11 lg:pl-12 pr-4 text-sm text-slate-900 focus:outline-none transition-all ${
+            className={`w-full border rounded-full py-2.5 lg:py-2.5 pl-11 lg:pl-12 pr-4 text-base lg:text-sm text-slate-900 focus:outline-none transition-all ${
               searchFocused
                 ? 'bg-white border-slate-300 shadow-lg shadow-slate-200/50'
                 : 'bg-white border-slate-200 placeholder:text-slate-400'
@@ -249,30 +249,30 @@ export default function Header({ title, onMenuClick, onChatbotToggle, chatbotTab
       </div>
 
       {/* Actions */}
-      <div className="flex items-center gap-2 ml-auto">
+      <div className={`flex items-center gap-2 ml-auto ${searchFocused ? 'hidden lg:flex' : ''}`}>
         <button 
           onClick={() => onChatbotToggle('agent')}
-          className={`relative flex items-center gap-1.5 px-3 py-2 rounded-xl transition-all ${
+          className={`relative flex items-center gap-1.5 px-3.5 py-2.5 lg:px-3 lg:py-2 rounded-xl transition-all ${
             chatbotTab === 'agent'
               ? 'bg-slate-900 text-white'
               : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
           }`}
           title="TorqeAI"
         >
-          <img src="/logo.png" alt="TorqeAI" className="w-[18px] h-[18px]" style={chatbotTab === 'agent' ? { filter: 'brightness(0) invert(1)' } : {}} />
+          <img src="/logo.png" alt="TorqeAI" className="w-5 h-5 lg:w-[18px] lg:h-[18px]" style={chatbotTab === 'agent' ? { filter: 'brightness(0) invert(1)' } : {}} />
           <span className="text-xs font-semibold hidden lg:inline">TorqeAI</span>
         </button>
         
         <button 
           onClick={() => onChatbotToggle('negotiate')}
-          className={`flex items-center gap-1.5 px-3 py-2 rounded-xl transition-all ${
+          className={`flex items-center gap-1.5 px-3.5 py-2.5 lg:px-3 lg:py-2 rounded-xl transition-all ${
             chatbotTab === 'negotiate'
               ? 'bg-slate-900 text-white'
               : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
           }`}
           title="Negotiation Coach"
         >
-          <TrendingUp size={18} />
+          <TrendingUp className="w-5 h-5 lg:w-[18px] lg:h-[18px]" />
           <span className="text-xs font-semibold hidden lg:inline">Negotiation Coach</span>
         </button>
 
@@ -282,10 +282,10 @@ export default function Header({ title, onMenuClick, onChatbotToggle, chatbotTab
         <div className="relative">
           <button 
             onClick={handleNotificationClick}
-            className="relative p-2.5 rounded-xl bg-slate-100 text-slate-600 hover:bg-slate-200 transition-all"
+            className="relative p-3 lg:p-2.5 rounded-xl bg-slate-100 text-slate-600 hover:bg-slate-200 transition-all"
             title="Notifications"
           >
-            <Bell className="w-4.5 h-4.5" size={18} />
+            <Bell className="w-5 h-5 lg:w-[18px] lg:h-[18px]" />
             <span className="absolute top-2 right-2 w-2 h-2 bg-slate-900 rounded-full" />
           </button>
           
@@ -299,10 +299,10 @@ export default function Header({ title, onMenuClick, onChatbotToggle, chatbotTab
         {/* Settings Button */}
         <button 
           onClick={onSettingsClick}
-          className="p-2.5 rounded-xl bg-slate-100 text-slate-600 hover:bg-slate-200 transition-all"
+          className="p-3 lg:p-2.5 rounded-xl bg-slate-100 text-slate-600 hover:bg-slate-200 transition-all"
           title="Settings"
         >
-          <Settings className="w-4.5 h-4.5" size={18} />
+          <Settings className="w-5 h-5 lg:w-[18px] lg:h-[18px]" />
         </button>
       </div>
     </header>

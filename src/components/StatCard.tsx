@@ -12,10 +12,10 @@ export default function StatCard({ label, value, change, changeType, color, suff
     <div className="bg-white rounded-2xl border border-slate-200 p-4 lg:p-5 hover:shadow-md hover:-translate-y-0.5 transition-all duration-200 relative overflow-hidden group">
       <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-orange to-orange-400 opacity-0 group-hover:opacity-100 transition-opacity" />
       
-      <p className="text-[10px] lg:text-xs font-medium text-slate-500 mb-1 lg:mb-2">{label}</p>
-      <p className={`text-2xl lg:text-3xl font-extrabold tracking-tight ${color || 'text-slate-900'}`}>
+      <p className="text-xs lg:text-xs font-medium text-slate-500 mb-1 lg:mb-2">{label}</p>
+      <p className={`text-xl lg:text-3xl font-extrabold tracking-tight ${color || 'text-slate-900'}`}>
         {value}
-        {suffix && <span className="text-lg font-medium text-slate-400 ml-1">{suffix}</span>}
+        {suffix && <span className="text-base lg:text-lg font-medium text-slate-400 ml-1">{suffix}</span>}
       </p>
       {change && (
         <p className={`text-xs font-semibold mt-2 flex items-center gap-1 ${

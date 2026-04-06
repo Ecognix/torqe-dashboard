@@ -269,7 +269,7 @@ export default function ContactProfilePanel({ isOpen, onClose, contact }: Contac
     <div className="fixed top-0 bottom-0 right-0 w-full sm:w-[420px] bg-white border-l border-slate-200 z-[60] flex flex-col shadow-2xl animate-slide-in">
       {/* Header */}
       <div className="flex items-center justify-between p-4 border-b border-slate-200">
-        <h2 className="text-sm font-bold text-slate-900">Contact Profile</h2>
+        <h2 className="text-base lg:text-sm font-bold text-slate-900">Contact Profile</h2>
         <button
           onClick={onClose}
           className="p-2 rounded-lg hover:bg-slate-100 transition-colors text-slate-400 hover:text-slate-600"
@@ -289,10 +289,10 @@ export default function ContactProfilePanel({ isOpen, onClose, contact }: Contac
           </div>
           <h3 className="text-lg font-bold text-slate-900">{contact.name}</h3>
           {details.role && details.company && (
-            <p className="text-sm text-slate-500 mt-0.5">{details.role} at {details.company}</p>
+            <p className="text-base lg:text-sm text-slate-500 mt-0.5">{details.role} at {details.company}</p>
           )}
           {details.bio && (
-            <p className="text-xs text-slate-400 mt-2 text-center leading-relaxed max-w-[300px]">{details.bio}</p>
+            <p className="text-sm lg:text-xs text-slate-400 mt-2 text-center leading-relaxed max-w-[300px]">{details.bio}</p>
           )}
         </div>
 
@@ -349,12 +349,12 @@ export default function ContactProfilePanel({ isOpen, onClose, contact }: Contac
                   {getChannelIcon(profile.platform)}
                 </span>
                 <div className="flex-1 min-w-0">
-                  <p className="text-sm font-medium text-slate-900">{getPlatformLabel(profile.platform)}</p>
-                  <p className="text-xs text-slate-500 truncate">{profile.username}</p>
+                  <p className="text-base lg:text-sm font-medium text-slate-900">{getPlatformLabel(profile.platform)}</p>
+                  <p className="text-sm lg:text-xs text-slate-500 truncate">{profile.username}</p>
                 </div>
                 <div className="flex items-center gap-2">
                   {profile.verified && (
-                    <span className="text-[10px] font-medium text-green-600 bg-green-50 px-2 py-0.5 rounded-full">Verified</span>
+                    <span className="text-xs lg:text-[10px] font-medium text-green-600 bg-green-50 px-2 py-0.5 rounded-full">Verified</span>
                   )}
                   <ExternalLink className="w-3.5 h-3.5 text-slate-400 group-hover:text-slate-600 transition-colors" />
                 </div>
@@ -390,11 +390,11 @@ export default function ContactProfilePanel({ isOpen, onClose, contact }: Contac
                     {getChannelIcon(profile.platform)}
                   </span>
                   <div className="flex-1 min-w-0">
-                    <p className="text-sm font-medium text-slate-900">{getPlatformLabel(profile.platform)}</p>
-                    <p className="text-xs text-slate-500 truncate">{profile.username}</p>
+                    <p className="text-base lg:text-sm font-medium text-slate-900">{getPlatformLabel(profile.platform)}</p>
+                    <p className="text-sm lg:text-xs text-slate-500 truncate">{profile.username}</p>
                   </div>
                   <div className="flex items-center gap-2">
-                    <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${getConfidenceColor(profile.confidence)}`}>
+                    <span className={`text-xs lg:text-[10px] font-bold px-2 py-0.5 rounded-full ${getConfidenceColor(profile.confidence)}`}>
                       {profile.confidence}% match
                     </span>
                     <ExternalLink className="w-3.5 h-3.5 text-slate-400 group-hover:text-slate-600 transition-colors" />

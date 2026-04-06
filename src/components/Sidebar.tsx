@@ -77,8 +77,8 @@ export default function Sidebar({ activeView, onViewChange, isOpen, onClose, onP
                   onClose();
                 }}
                 className={`
-                  w-full flex items-center gap-3 px-3 py-2.5 rounded-xl
-                  text-sm font-medium transition-all duration-200
+                  w-full flex items-center gap-3 px-3 py-3 lg:py-2.5 rounded-xl
+                  text-base lg:text-sm font-medium transition-all duration-200
                   ${isActive 
                     ? 'bg-orange/10 text-orange' 
                     : 'text-neutral-400 hover:bg-neutral-800 hover:text-neutral-200'
@@ -114,7 +114,7 @@ export default function Sidebar({ activeView, onViewChange, isOpen, onClose, onP
                 onViewChange(`channel-${channel.id}`);
                 onClose();
               }}
-              className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all duration-200 ${
+              className={`w-full flex items-center gap-3 px-3 py-3 lg:py-2.5 rounded-xl text-base lg:text-sm font-medium transition-all duration-200 ${
                 isActive
                   ? 'bg-orange/10 text-orange'
                   : 'text-neutral-400 hover:bg-neutral-800 hover:text-neutral-200'
@@ -143,12 +143,12 @@ export default function Sidebar({ activeView, onViewChange, isOpen, onClose, onP
           className="w-full flex items-center gap-3 p-3 rounded-xl hover:bg-neutral-800 cursor-pointer transition-colors"
           onClick={onProfileClick}
         >
-          <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-orange to-orange-400 flex items-center justify-center font-bold text-white text-sm">
+          <div className="w-10 h-10 lg:w-9 lg:h-9 rounded-xl bg-gradient-to-br from-orange to-orange-400 flex items-center justify-center font-bold text-white text-sm">
             AK
           </div>
           <div className="flex-1 min-w-0 text-left">
-            <div className="text-sm font-semibold text-white truncate">Arjun Kapoor</div>
-            <div className="text-xs text-orange font-medium">Pro Plan</div>
+            <div className="text-base lg:text-sm font-semibold text-white truncate">Arjun Kapoor</div>
+            <div className="text-sm lg:text-xs text-orange font-medium">Pro Plan</div>
           </div>
         </button>
       </div>

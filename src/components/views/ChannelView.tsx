@@ -189,9 +189,9 @@ export default function ChannelView({ channel }: ChannelViewProps) {
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 lg:gap-4">
         {stats.map((stat, i) => (
           <div key={i} className="bg-white rounded-2xl border border-slate-200 p-4 lg:p-5">
-            <p className="text-[10px] lg:text-xs font-medium text-slate-500 mb-1">{stat.label}</p>
+            <p className="text-xs lg:text-xs font-medium text-slate-500 mb-1">{stat.label}</p>
             <p className="text-xl lg:text-2xl font-bold text-slate-900">{stat.value}</p>
-            <p className="text-[10px] lg:text-xs text-slate-400 mt-1 truncate">{stat.sub}</p>
+            <p className="text-xs lg:text-xs text-slate-400 mt-1 truncate">{stat.sub}</p>
           </div>
         ))}
       </div>
@@ -208,7 +208,7 @@ export default function ChannelView({ channel }: ChannelViewProps) {
                 value={searchQuery}
                 onChange={e => setSearchQuery(e.target.value)}
                 placeholder={`Search ${meta.label} conversations...`}
-                className="w-full bg-slate-50 border border-slate-200 rounded-xl py-2.5 pl-10 pr-4 text-sm placeholder:text-slate-400 focus:outline-none focus:border-slate-300 focus:bg-white transition-all"
+                className="w-full bg-slate-50 border border-slate-200 rounded-xl py-2.5 pl-10 pr-4 text-base lg:text-sm placeholder:text-slate-400 focus:outline-none focus:border-slate-300 focus:bg-white transition-all"
               />
             </div>
             <div className="flex gap-2">
@@ -216,7 +216,7 @@ export default function ChannelView({ channel }: ChannelViewProps) {
                 <button
                   key={f}
                   onClick={() => setSelectedFilter(f)}
-                  className={`px-3 py-1.5 rounded-full text-xs font-medium transition-all ${
+                  className={`px-3 py-2 lg:py-1.5 rounded-full text-sm lg:text-xs font-medium transition-all ${
                     selectedFilter === f ? 'bg-slate-900 text-white' : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
                   }`}
                 >
@@ -242,10 +242,10 @@ export default function ChannelView({ channel }: ChannelViewProps) {
                     </div>
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center justify-between mb-0.5">
-                        <span className={`text-sm font-semibold ${contact.unread ? 'text-slate-900' : 'text-slate-700'}`}>
+                        <span className={`text-base lg:text-sm font-semibold ${contact.unread ? 'text-slate-900' : 'text-slate-700'}`}>
                           {contact.name}
                         </span>
-                        <span className="text-xs text-slate-400">{contact.time}</span>
+                        <span className="text-sm lg:text-xs text-slate-400">{contact.time}</span>
                       </div>
                       <div className="flex items-center gap-1.5">
                         {contact.direction === 'out' ? (
@@ -260,7 +260,7 @@ export default function ChannelView({ channel }: ChannelViewProps) {
                     </div>
                     <div className="flex flex-col items-end gap-1.5 flex-shrink-0">
                       {contact.unread && <span className="w-2 h-2 bg-orange rounded-full" />}
-                      <span className={`text-[10px] font-medium px-2 py-0.5 rounded-full ${
+                      <span className={`text-xs font-medium px-2 py-0.5 rounded-full ${
                         contact.status === 'active' ? 'bg-green-50 text-green-600'
                           : contact.status === 'waiting' ? 'bg-yellow-50 text-yellow-600'
                           : 'bg-slate-100 text-slate-500'

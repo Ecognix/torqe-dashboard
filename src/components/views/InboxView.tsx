@@ -107,9 +107,11 @@ export default function InboxView({ onChatbotAction, onProfileClick }: InboxView
   return (
     <div className="space-y-6 animate-fade-in">
       {/* Stats Row */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+      <div className="flex gap-3 overflow-x-auto pb-1 snap-x snap-mandatory lg:grid lg:grid-cols-4 lg:gap-4 lg:overflow-visible lg:pb-0">
         {inboxStats.map((stat, i) => (
-          <StatCard key={i} {...stat} />
+          <div key={i} className="min-w-[calc(50%-6px)] snap-start lg:min-w-0">
+            <StatCard {...stat} />
+          </div>
         ))}
       </div>
 
@@ -123,7 +125,7 @@ export default function InboxView({ onChatbotAction, onProfileClick }: InboxView
               <button
                 key={f}
                 onClick={() => setFilter(f.toLowerCase())}
-                className={`px-4 py-1.5 rounded-full text-xs font-medium transition-all ${
+                className={`px-4 py-2 rounded-full text-sm lg:text-xs font-medium transition-all ${
                   filter === f.toLowerCase()
                     ? 'bg-orange text-white'
                     : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
@@ -149,19 +151,19 @@ export default function InboxView({ onChatbotAction, onProfileClick }: InboxView
                 }`}
               >
                 <div 
-                  className="w-10 h-10 rounded-xl flex items-center justify-center text-white font-bold text-sm flex-shrink-0"
+                  className="w-11 h-11 lg:w-10 lg:h-10 rounded-xl flex items-center justify-center text-white font-bold text-sm flex-shrink-0"
                   style={{ background: msg.gradient }}
                 >
                   {msg.initials}
                 </div>
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center justify-between mb-1">
-                    <span className={`font-semibold text-sm ${msg.unread ? 'text-slate-900' : 'text-slate-700'}`}>
+                    <span className={`font-semibold text-base lg:text-sm ${msg.unread ? 'text-slate-900' : 'text-slate-700'}`}>
                       {msg.name}
                     </span>
-                    <span className="text-xs text-slate-400">{msg.time}</span>
+                    <span className="text-sm lg:text-xs text-slate-400">{msg.time}</span>
                   </div>
-                  <p className="text-sm text-slate-500 leading-relaxed">{msg.preview}</p>
+                  <p className="text-sm lg:text-sm text-slate-500 leading-relaxed">{msg.preview}</p>
                 </div>
                 <div className="flex flex-col items-end justify-between h-full flex-shrink-0">
                   {msg.unread && (
@@ -194,8 +196,8 @@ export default function InboxView({ onChatbotAction, onProfileClick }: InboxView
               {selectedMessage.initials}
             </button>
             <button onClick={() => onProfileClick?.(selectedMessage)} className="flex-1 text-left hover:opacity-80 transition-opacity min-w-0">
-              <h3 className="font-bold text-slate-900 text-sm lg:text-base truncate">{selectedMessage.name}</h3>
-              <p className="text-xs text-slate-500 truncate">{selectedMessage.channelLabel} - Last active {selectedMessage.time}</p>
+              <h3 className="font-bold text-slate-900 text-base lg:text-base truncate">{selectedMessage.name}</h3>
+              <p className="text-sm lg:text-xs text-slate-500 truncate">{selectedMessage.channelLabel} - Last active {selectedMessage.time}</p>
             </button>
             <div className="flex gap-1.5 lg:gap-2 flex-shrink-0">
               <button 
@@ -237,7 +239,7 @@ export default function InboxView({ onChatbotAction, onProfileClick }: InboxView
                       ? 'bg-orange text-white rounded-tr-sm' 
                       : 'bg-slate-100 text-slate-800 rounded-tl-sm'
                   }`}>
-                    <p className="text-sm leading-relaxed">{msg.text}</p>
+                    <p className="text-base lg:text-sm leading-relaxed" style={{ fontFamily: "'Inter', sans-serif" }}>{msg.text}</p>
                   </div>
                   <p className={`text-xs mt-1 ${msg.type === 'outgoing' ? 'text-right text-slate-400' : 'text-slate-400'}`}>
                     {msg.time}
@@ -318,7 +320,7 @@ export default function InboxView({ onChatbotAction, onProfileClick }: InboxView
                 onChange={(e) => setInputValue(e.target.value)}
                 onKeyDown={(e) => e.key === 'Enter' && handleSend()}
                 placeholder="Type a message..."
-                className="flex-1 bg-slate-100 rounded-full px-4 lg:px-5 py-2.5 lg:py-3 text-sm placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-orange/50"
+                className="flex-1 bg-slate-100 rounded-full px-4 lg:px-5 py-3 lg:py-3 text-base lg:text-sm placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-orange/50"
               />
               <button 
                 onClick={triggerAutopilot}

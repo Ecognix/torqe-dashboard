@@ -76,7 +76,7 @@ export default function NegotiateView() {
                       <Lightbulb className="w-5 h-5 text-purple-600 flex-shrink-0 mt-0.5" />
                       <div>
                         <p className="text-xs font-semibold text-purple-600 mb-1">AI Coach</p>
-                        <p className="text-sm text-purple-700 leading-relaxed">{msg.text}</p>
+                        <p className="text-base lg:text-sm text-purple-700 leading-relaxed">{msg.text}</p>
                       </div>
                     </div>
                   ) : (
@@ -91,7 +91,7 @@ export default function NegotiateView() {
                         }`}>
                           {msg.type === 'seller' ? 'You' : 'Buyer - Rahul'}
                         </span>
-                        <p className="text-sm leading-relaxed">{msg.text}</p>
+                        <p className="text-base lg:text-sm leading-relaxed">{msg.text}</p>
                       </div>
                     </div>
                   )}
@@ -115,8 +115,8 @@ export default function NegotiateView() {
                     {tip.num}
                   </div>
                   <div>
-                    <p className="font-semibold text-sm text-slate-900 mb-1">{tip.title}</p>
-                    <p className="text-xs text-slate-600 leading-relaxed">{tip.desc}</p>
+                    <p className="font-semibold text-base lg:text-sm text-slate-900 mb-1">{tip.title}</p>
+                    <p className="text-sm lg:text-xs text-slate-600 leading-relaxed">{tip.desc}</p>
                   </div>
                 </div>
               ))}
@@ -209,7 +209,7 @@ export default function NegotiateView() {
                       {offer.value}
                     </span>
                   </div>
-                  <p className="text-xs text-slate-600 leading-relaxed mb-3">{offer.reason}</p>
+                  <p className="text-sm lg:text-xs text-slate-600 leading-relaxed mb-3">{offer.reason}</p>
                   {offer.color === 'orange' && (
                     <button className="w-full py-2.5 rounded-xl bg-orange text-white text-sm font-semibold hover:bg-orange-500 transition-colors flex items-center justify-center gap-2">
                       Use This Counter

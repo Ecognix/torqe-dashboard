@@ -196,9 +196,9 @@ export default function CalendarView() {
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 lg:gap-4">
         {calendarStats.map((stat, i) => (
           <div key={i} className="bg-white rounded-2xl border border-slate-200 p-4 lg:p-5">
-            <p className="text-[10px] lg:text-xs font-medium text-slate-500 mb-1">{stat.label}</p>
+            <p className="text-xs lg:text-xs font-medium text-slate-500 mb-1">{stat.label}</p>
             <p className="text-xl lg:text-2xl font-bold text-slate-900">{stat.value}</p>
-            <p className="text-[10px] lg:text-xs text-slate-400 mt-1 truncate">{stat.sub}</p>
+            <p className="text-xs lg:text-xs text-slate-400 mt-1 truncate">{stat.sub}</p>
           </div>
         ))}
       </div>

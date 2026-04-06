@@ -1,4 +1,4 @@
-'use client';
+ 'use client';
 
 import { useState, useEffect, useRef } from 'react';
 import { X, Send, FileText, ArrowRight, Pencil, Smile, Zap, Star, Bot, TrendingUp } from 'lucide-react';
@@ -174,7 +174,7 @@ export default function ChatbotPanel({ isOpen, onClose, tab, onTabChange }: Chat
         <div className="flex gap-1 bg-slate-100 rounded-xl p-1">
           <button
             onClick={() => handleTabChange('agent')}
-            className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-all ${
+            className={`flex items-center gap-2 px-4 py-2.5 lg:py-2 rounded-lg text-base lg:text-sm font-medium transition-all ${
               activeTab === 'agent'
                 ? 'bg-slate-900 text-white'
                 : 'text-slate-600 hover:text-slate-900 hover:bg-slate-200'
@@ -185,7 +185,7 @@ export default function ChatbotPanel({ isOpen, onClose, tab, onTabChange }: Chat
           </button>
           <button
             onClick={() => handleTabChange('negotiate')}
-            className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-all ${
+            className={`flex items-center gap-2 px-4 py-2.5 lg:py-2 rounded-lg text-base lg:text-sm font-medium transition-all ${
               activeTab === 'negotiate'
                 ? 'bg-slate-900 text-white'
                 : 'text-slate-600 hover:text-slate-900 hover:bg-slate-200'
@@ -208,27 +208,27 @@ export default function ChatbotPanel({ isOpen, onClose, tab, onTabChange }: Chat
 
       {/* AI Tool Action Buttons */}
       <div className="flex gap-2 p-3 border-b border-slate-100 overflow-x-auto bg-slate-50">
-        <button onClick={() => handleAction('summarise')} className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white text-slate-600 text-xs font-medium hover:bg-slate-100 whitespace-nowrap transition-all border border-slate-200">
+        <button onClick={() => handleAction('summarise')} className="flex items-center gap-1.5 px-3.5 py-2 lg:px-3 lg:py-1.5 rounded-full bg-white text-slate-600 text-sm lg:text-xs font-medium hover:bg-slate-100 whitespace-nowrap transition-all border border-slate-200">
           <FileText className="w-3.5 h-3.5" />
           Summarise
         </button>
-        <button onClick={() => handleAction('followup')} className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white text-slate-600 text-xs font-medium hover:bg-slate-100 whitespace-nowrap transition-all border border-slate-200">
+        <button onClick={() => handleAction('followup')} className="flex items-center gap-1.5 px-3.5 py-2 lg:px-3 lg:py-1.5 rounded-full bg-white text-slate-600 text-sm lg:text-xs font-medium hover:bg-slate-100 whitespace-nowrap transition-all border border-slate-200">
           <ArrowRight className="w-3.5 h-3.5" />
           Follow-up
         </button>
-        <button onClick={() => handleAction('smartsend')} className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white text-slate-600 text-xs font-medium hover:bg-slate-100 whitespace-nowrap transition-all border border-slate-200">
+        <button onClick={() => handleAction('smartsend')} className="flex items-center gap-1.5 px-3.5 py-2 lg:px-3 lg:py-1.5 rounded-full bg-white text-slate-600 text-sm lg:text-xs font-medium hover:bg-slate-100 whitespace-nowrap transition-all border border-slate-200">
           <Zap className="w-3.5 h-3.5" />
           Smart Send
         </button>
-        <button onClick={() => handleAction('draft')} className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white text-slate-600 text-xs font-medium hover:bg-slate-100 whitespace-nowrap transition-all border border-slate-200">
+        <button onClick={() => handleAction('draft')} className="flex items-center gap-1.5 px-3.5 py-2 lg:px-3 lg:py-1.5 rounded-full bg-white text-slate-600 text-sm lg:text-xs font-medium hover:bg-slate-100 whitespace-nowrap transition-all border border-slate-200">
           <Pencil className="w-3.5 h-3.5" />
           Draft
         </button>
-        <button onClick={() => handleAction('vibecheck')} className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white text-slate-600 text-xs font-medium hover:bg-slate-100 whitespace-nowrap transition-all border border-slate-200">
+        <button onClick={() => handleAction('vibecheck')} className="flex items-center gap-1.5 px-3.5 py-2 lg:px-3 lg:py-1.5 rounded-full bg-white text-slate-600 text-sm lg:text-xs font-medium hover:bg-slate-100 whitespace-nowrap transition-all border border-slate-200">
           <Smile className="w-3.5 h-3.5" />
           Vibe
         </button>
-        <button onClick={() => handleAction('tone')} className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white text-slate-600 text-xs font-medium hover:bg-slate-100 whitespace-nowrap transition-all border border-slate-200">
+        <button onClick={() => handleAction('tone')} className="flex items-center gap-1.5 px-3.5 py-2 lg:px-3 lg:py-1.5 rounded-full bg-white text-slate-600 text-sm lg:text-xs font-medium hover:bg-slate-100 whitespace-nowrap transition-all border border-slate-200">
           <Star className="w-3.5 h-3.5" />
           Tone
         </button>
@@ -262,7 +262,7 @@ export default function ChatbotPanel({ isOpen, onClose, tab, onTabChange }: Chat
                   {msg.name}
                 </p>
               )}
-              <p className="text-sm leading-relaxed" dangerouslySetInnerHTML={{ __html: msg.text }} />
+              <p className="text-base lg:text-sm leading-relaxed" dangerouslySetInnerHTML={{ __html: msg.text }} />
               <p className={`text-xs mt-1 ${msg.role === 'bot' ? 'text-slate-400' : 'text-orange-200'}`}>
                 {msg.time}
               </p>
@@ -290,7 +290,7 @@ export default function ChatbotPanel({ isOpen, onClose, tab, onTabChange }: Chat
             onChange={(e) => setInput(e.target.value)}
             onKeyDown={(e) => e.key === 'Enter' && handleSend()}
             placeholder={activeTab === 'agent' ? 'Ask Torqe anything...' : 'Ask about deal strategy...'}
-            className="flex-1 bg-slate-100 rounded-full px-4 py-2.5 lg:py-3 text-sm placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-orange/50"
+            className="flex-1 bg-slate-100 rounded-full px-4 py-3 lg:py-3 text-base lg:text-sm placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-orange/50"
           />
           <button
             onClick={handleSend}
