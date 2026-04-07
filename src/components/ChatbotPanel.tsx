@@ -271,11 +271,11 @@ export default function ChatbotPanel({ isOpen, onClose, tab, onTabChange }: Chat
                 : 'bg-orange text-white rounded-tr-sm'
             } ${msg.isAction ? 'border border-slate-200' : ''}`}>
               {msg.role === 'bot' && (
-                <p className="font-bold mb-0.5 lg:mb-1 text-xs lg:text-sm text-slate-900">
+                <p className="font-bold mb-0.5 lg:mb-1 text-[13px] lg:text-sm text-slate-900">
                   {msg.name}
                 </p>
               )}
-              <p className="text-xs lg:text-sm leading-relaxed" dangerouslySetInnerHTML={{ __html: msg.text }} />
+              <p className="text-[13px] lg:text-sm leading-relaxed" dangerouslySetInnerHTML={{ __html: msg.text }} />
               <p className={`text-[10px] lg:text-xs mt-1 ${msg.role === 'bot' ? 'text-slate-400' : 'text-orange-200'}`}>
                 {msg.time}
               </p>

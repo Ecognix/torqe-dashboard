@@ -219,7 +219,7 @@ export default function InboxView({ onChatbotAction, onProfileClick }: InboxView
                   setAiCard(null);
                   setMobileShowThread(true);
                 }}
-                className={`w-full flex items-start gap-2.5 lg:gap-3 px-4 lg:px-5 py-4 lg:py-[18px] transition-all text-left relative ${
+                className={`w-full flex items-start gap-2.5 lg:gap-3 px-4 lg:px-5 py-5 lg:py-[22px] transition-all text-left relative ${
                   selectedMessage.id === msg.id 
                     ? 'bg-orange/5' 
                     : 'hover:bg-slate-50'
@@ -362,7 +362,7 @@ export default function InboxView({ onChatbotAction, onProfileClick }: InboxView
                       ? 'bg-orange text-white rounded-2xl rounded-br-md' 
                       : 'bg-white border border-slate-200 text-slate-800 rounded-2xl rounded-bl-md shadow-sm'
                   }`}>
-                    <p className="text-xs lg:text-sm leading-relaxed" style={{ fontFamily: "'Inter', sans-serif" }}>{msg.text}</p>
+                    <p className="text-[13px] lg:text-sm leading-relaxed" style={{ fontFamily: "'Inter', sans-serif" }}>{msg.text}</p>
                   </div>
                   <div className={`flex items-center gap-1 mt-1 px-1 ${msg.type === 'outgoing' ? 'flex-row-reverse' : ''}`}>
                     <span className="text-[11px] text-slate-400">{msg.time}</span>
