@@ -183,22 +183,22 @@ export default function ChatbotPanel({ isOpen, onClose, tab, onTabChange }: Chat
   return (
     <div className="fixed inset-y-0 right-0 w-full sm:w-[480px] bg-white border-l border-slate-200 z-50 flex flex-col shadow-2xl">
       {/* Header with Tabs */}
-      <div className="flex items-center justify-between p-4 border-b border-slate-200">
+      <div className="flex items-center justify-between p-2.5 lg:p-4 border-b border-slate-200">
         <div className="flex gap-1 bg-slate-100 rounded-xl p-1">
           <button
             onClick={() => handleTabChange('agent')}
-            className={`flex items-center gap-2 px-4 py-2.5 lg:py-2 rounded-lg text-base lg:text-sm font-medium transition-all ${
+            className={`flex items-center gap-1.5 lg:gap-2 px-3 lg:px-4 py-2 lg:py-2 rounded-lg text-xs lg:text-sm font-medium transition-all ${
               activeTab === 'agent'
                 ? 'bg-slate-900 text-white'
                 : 'text-slate-600 hover:text-slate-900 hover:bg-slate-200'
             }`}
           >
-            <img src="/logo.png" alt="TorqeAI" className="w-5 h-5" style={activeTab === 'agent' ? { filter: 'brightness(0) invert(1)' } : {}} />
+            <img src="/logo.png" alt="TorqeAI" className="w-4 h-4 lg:w-5 lg:h-5" style={activeTab === 'agent' ? { filter: 'brightness(0) invert(1)' } : {}} />
             TorqeAI
           </button>
           <button
             onClick={() => handleTabChange('negotiate')}
-            className={`flex items-center gap-2 px-4 py-2.5 lg:py-2 rounded-lg text-base lg:text-sm font-medium transition-all ${
+            className={`flex items-center gap-1.5 lg:gap-2 px-3 lg:px-4 py-2 lg:py-2 rounded-lg text-xs lg:text-sm font-medium transition-all ${
               activeTab === 'negotiate'
                 ? 'bg-slate-900 text-white'
                 : 'text-slate-600 hover:text-slate-900 hover:bg-slate-200'
@@ -220,63 +220,63 @@ export default function ChatbotPanel({ isOpen, onClose, tab, onTabChange }: Chat
       </div>
 
       {/* AI Tool Action Buttons */}
-      <div className="flex gap-2 p-3 border-b border-slate-100 overflow-x-auto bg-slate-50">
-        <button onClick={() => handleAction('summarise')} className="flex items-center gap-1.5 px-3.5 py-2 lg:px-3 lg:py-1.5 rounded-full bg-white text-slate-600 text-sm lg:text-xs font-medium hover:bg-slate-100 whitespace-nowrap transition-all border border-slate-200">
-          <FileText className="w-3.5 h-3.5" />
+      <div className="flex gap-1.5 lg:gap-2 p-2 lg:p-3 border-b border-slate-100 overflow-x-auto bg-slate-50">
+        <button onClick={() => handleAction('summarise')} className="flex items-center gap-1 lg:gap-1.5 px-2.5 py-1.5 lg:px-3 lg:py-1.5 rounded-full bg-white text-slate-600 text-[11px] lg:text-xs font-medium hover:bg-slate-100 whitespace-nowrap transition-all border border-slate-200">
+          <FileText className="w-3 h-3 lg:w-3.5 lg:h-3.5" />
           Summarise
         </button>
-        <button onClick={() => handleAction('followup')} className="flex items-center gap-1.5 px-3.5 py-2 lg:px-3 lg:py-1.5 rounded-full bg-white text-slate-600 text-sm lg:text-xs font-medium hover:bg-slate-100 whitespace-nowrap transition-all border border-slate-200">
-          <ArrowRight className="w-3.5 h-3.5" />
+        <button onClick={() => handleAction('followup')} className="flex items-center gap-1 lg:gap-1.5 px-2.5 py-1.5 lg:px-3 lg:py-1.5 rounded-full bg-white text-slate-600 text-[11px] lg:text-xs font-medium hover:bg-slate-100 whitespace-nowrap transition-all border border-slate-200">
+          <ArrowRight className="w-3 h-3 lg:w-3.5 lg:h-3.5" />
           Follow-up
         </button>
-        <button onClick={() => handleAction('smartsend')} className="flex items-center gap-1.5 px-3.5 py-2 lg:px-3 lg:py-1.5 rounded-full bg-white text-slate-600 text-sm lg:text-xs font-medium hover:bg-slate-100 whitespace-nowrap transition-all border border-slate-200">
-          <Zap className="w-3.5 h-3.5" />
+        <button onClick={() => handleAction('smartsend')} className="flex items-center gap-1 lg:gap-1.5 px-2.5 py-1.5 lg:px-3 lg:py-1.5 rounded-full bg-white text-slate-600 text-[11px] lg:text-xs font-medium hover:bg-slate-100 whitespace-nowrap transition-all border border-slate-200">
+          <Zap className="w-3 h-3 lg:w-3.5 lg:h-3.5" />
           Smart Send
         </button>
-        <button onClick={() => handleAction('draft')} className="flex items-center gap-1.5 px-3.5 py-2 lg:px-3 lg:py-1.5 rounded-full bg-white text-slate-600 text-sm lg:text-xs font-medium hover:bg-slate-100 whitespace-nowrap transition-all border border-slate-200">
-          <Pencil className="w-3.5 h-3.5" />
+        <button onClick={() => handleAction('draft')} className="flex items-center gap-1 lg:gap-1.5 px-2.5 py-1.5 lg:px-3 lg:py-1.5 rounded-full bg-white text-slate-600 text-[11px] lg:text-xs font-medium hover:bg-slate-100 whitespace-nowrap transition-all border border-slate-200">
+          <Pencil className="w-3 h-3 lg:w-3.5 lg:h-3.5" />
           Draft
         </button>
-        <button onClick={() => handleAction('vibecheck')} className="flex items-center gap-1.5 px-3.5 py-2 lg:px-3 lg:py-1.5 rounded-full bg-white text-slate-600 text-sm lg:text-xs font-medium hover:bg-slate-100 whitespace-nowrap transition-all border border-slate-200">
-          <Smile className="w-3.5 h-3.5" />
+        <button onClick={() => handleAction('vibecheck')} className="flex items-center gap-1 lg:gap-1.5 px-2.5 py-1.5 lg:px-3 lg:py-1.5 rounded-full bg-white text-slate-600 text-[11px] lg:text-xs font-medium hover:bg-slate-100 whitespace-nowrap transition-all border border-slate-200">
+          <Smile className="w-3 h-3 lg:w-3.5 lg:h-3.5" />
           Vibe
         </button>
-        <button onClick={() => handleAction('tone')} className="flex items-center gap-1.5 px-3.5 py-2 lg:px-3 lg:py-1.5 rounded-full bg-white text-slate-600 text-sm lg:text-xs font-medium hover:bg-slate-100 whitespace-nowrap transition-all border border-slate-200">
-          <Star className="w-3.5 h-3.5" />
+        <button onClick={() => handleAction('tone')} className="flex items-center gap-1 lg:gap-1.5 px-2.5 py-1.5 lg:px-3 lg:py-1.5 rounded-full bg-white text-slate-600 text-[11px] lg:text-xs font-medium hover:bg-slate-100 whitespace-nowrap transition-all border border-slate-200">
+          <Star className="w-3 h-3 lg:w-3.5 lg:h-3.5" />
           Tone
         </button>
       </div>
 
       {/* Messages */}
-      <div className="flex-1 overflow-y-auto p-4 space-y-4">
+      <div className="flex-1 overflow-y-auto p-3 lg:p-4 space-y-3 lg:space-y-4">
         {messages.map((msg, i) => (
           <div
             key={i}
-            className={`flex gap-3 ${msg.role === 'user' ? 'flex-row-reverse' : ''}`}
+            className={`flex gap-2 lg:gap-3 ${msg.role === 'user' ? 'flex-row-reverse' : ''}`}
           >
             {msg.role === 'bot' && (
               msg.avatar === 'agent' ? (
-                <div className="w-10 h-10 flex items-center justify-center flex-shrink-0">
-                  <img src="/logo.png" alt="TorqeAI" className="w-9 h-9" />
+                <div className="w-7 h-7 lg:w-10 lg:h-10 flex items-center justify-center flex-shrink-0">
+                  <img src="/logo.png" alt="TorqeAI" className="w-6 h-6 lg:w-9 lg:h-9" />
                 </div>
               ) : (
-                <div className="w-10 h-10 flex items-center justify-center text-slate-900 flex-shrink-0">
+                <div className="w-7 h-7 lg:w-10 lg:h-10 flex items-center justify-center text-slate-900 flex-shrink-0">
                   {renderAvatar(msg.avatar)}
                 </div>
               )
             )}
-            <div className={`max-w-[85%] rounded-2xl px-4 py-3 ${
+            <div className={`max-w-[85%] rounded-2xl px-3 py-2 lg:px-4 lg:py-3 ${
               msg.role === 'bot'
                 ? 'text-slate-800 rounded-tl-sm'
                 : 'bg-orange text-white rounded-tr-sm'
             } ${msg.isAction ? 'border border-slate-200' : ''}`}>
               {msg.role === 'bot' && (
-                <p className="font-bold mb-1 text-sm text-slate-900">
+                <p className="font-bold mb-0.5 lg:mb-1 text-xs lg:text-sm text-slate-900">
                   {msg.name}
                 </p>
               )}
-              <p className="text-base lg:text-sm leading-relaxed" dangerouslySetInnerHTML={{ __html: msg.text }} />
-              <p className={`text-xs mt-1 ${msg.role === 'bot' ? 'text-slate-400' : 'text-orange-200'}`}>
+              <p className="text-xs lg:text-sm leading-relaxed" dangerouslySetInnerHTML={{ __html: msg.text }} />
+              <p className={`text-[10px] lg:text-xs mt-1 ${msg.role === 'bot' ? 'text-slate-400' : 'text-orange-200'}`}>
                 {msg.time}
               </p>
             </div>
