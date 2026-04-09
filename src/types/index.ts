@@ -2,11 +2,13 @@ export interface Message {
   id: number;
   name: string;
   initials: string;
+  avatarUrl?: string;
   channel: 'whatsapp' | 'gmail' | 'linkedin' | 'slack' | 'instagram' | 'telegram';
   channelLabel: string;
   priority: 'urgent' | 'high' | 'normal';
   time: string;
   preview: string;
+  subject?: string;
   unread: boolean;
   gradient: string;
   thread: ThreadMessage[];
