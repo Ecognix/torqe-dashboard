@@ -66,8 +66,9 @@ body {
   }
 }
 
-/* Fix input text color - body color is light, inputs need dark text */
-input, select, textarea {
+/* Fix input text color - only for light-background inputs in the main dashboard */
+.bg-white input, .bg-white select, .bg-white textarea,
+.bg-slate-50 input, .bg-slate-50 select, .bg-slate-50 textarea {
   color: #0f172a;
 }
 

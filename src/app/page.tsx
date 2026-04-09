@@ -1,6 +1,8 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useSearchParams, useRouter } from 'next/navigation';
+import { useProfile } from '@/lib/hooks/useProfile';
 import Sidebar from '@/components/Sidebar';
 import Header from '@/components/Header';
 import InboxView from '@/components/views/InboxView';
@@ -20,6 +22,9 @@ import type { Message } from '@/types';
 type ViewType = 'inbox' | 'ai' | 'pipeline' | 'scheduled' | 'negotiate' | 'calendar' | 'channel-whatsapp' | 'channel-gmail' | 'channel-linkedin' | 'channel-slack' | 'channel-instagram' | 'channel-telegram';
 
 export default function Dashboard() {
+  const searchParams = useSearchParams();
+  const router = useRouter();
+  const { profile, loading: profileLoading, updateProfile, getInitials } = useProfile();
   const [activeView, setActiveView] = useState<ViewType>('inbox');
   const [chatbotOpen, setChatbotOpen] = useState(false);
   const [chatbotTab, setChatbotTab] = useState<'agent' | 'negotiate'>('agent');
@@ -30,6 +35,31 @@ export default function Dashboard() {
   const [selectedMessageId, setSelectedMessageId] = useState<number>(0);
   const [contactProfileOpen, setContactProfileOpen] = useState(false);
   const [selectedContact, setSelectedContact] = useState<Message | null>(null);
+  const [oauthSuccess, setOauthSuccess] = useState<string | null>(null);
+  const [oauthError, setOauthError] = useState<string | null>(null);
+
+  // Handle OAuth redirect params
+  useEffect(() => {
+    const view = searchParams.get('view');
+    const success = searchParams.get('success');
+    const error = searchParams.get('error');
+
+    if (view === 'settings') {
+      setShowSettings(true);
+    }
+    if (success) {
+      setOauthSuccess(success);
+      // Clear URL params
+      router.replace('/', { scroll: false });
+      // Auto-clear success message after 5 seconds
+      setTimeout(() => setOauthSuccess(null), 5000);
+    }
+    if (error) {
+      setOauthError(error);
+      router.replace('/', { scroll: false });
+      setTimeout(() => setOauthError(null), 5000);
+    }
+  }, [searchParams, router]);
 
   const viewTitles: Record<ViewType, string> = {
     inbox: 'Inbox',
@@ -123,10 +153,42 @@ export default function Dashboard() {
         isOpen={sidebarOpen}
         onClose={() => setSidebarOpen(false)}
         onProfileClick={toggleProfile}
+        userName={profile?.full_name || undefined}
+        userInitials={getInitials()}
       />
 
       {/* Main Content */}
-      <main className="flex-1 flex flex-col min-w-0 bg-white">
+      <main className="flex-1 flex flex-col min-w-0 bg-white relative">
+        {/* OAuth Success/Error Toast */}
+        {(oauthSuccess || oauthError) && (
+          <div className="absolute top-4 left-1/2 -translate-x-1/2 z-50 w-full max-w-md px-4">
+            {oauthSuccess && (
+              <div className="p-4 rounded-xl bg-green-50 border border-green-200 shadow-lg">
+                <p className="font-medium text-green-800">
+                  {oauthSuccess === 'gmail_connected' && 'Gmail connected successfully!'}
+                  {oauthSuccess === 'linkedin_connected' && 'LinkedIn connected successfully!'}
+                  {oauthSuccess === 'whatsapp_connected' && 'WhatsApp connected successfully!'}
+                  {!['gmail_connected', 'linkedin_connected', 'whatsapp_connected'].includes(oauthSuccess) && 'Connected successfully!'}
+                </p>
+                <p className="text-sm text-green-600 mt-1">
+                  Your messages will sync shortly.
+                </p>
+              </div>
+            )}
+            {oauthError && (
+              <div className="p-4 rounded-xl bg-red-50 border border-red-200 shadow-lg max-w-md">
+                <p className="font-medium text-red-800">Connection failed</p>
+                <p className="text-sm text-red-600 mt-1 break-words">
+                  {oauthError === 'google_auth_denied' && 'You denied access to your Google account.'}
+                  {oauthError === 'missing_params' && 'Missing required parameters. Please try again.'}
+                  {oauthError === 'auth_failed' && 'Authentication failed. Please try again.'}
+                  {!['google_auth_denied', 'missing_params', 'auth_failed'].includes(oauthError) && decodeURIComponent(oauthError)}
+                </p>
+              </div>
+            )}
+          </div>
+        )}
+
         <Header 
           title={viewTitles[activeView]}
           onMenuClick={() => setSidebarOpen(true)}
@@ -138,7 +200,7 @@ export default function Dashboard() {
         
         <div className="flex-1 overflow-auto p-3 lg:p-6 bg-slate-50">
           <div className="max-w-screen-2xl mx-auto">
-            {showSettings ? <SettingsView /> : showProfile ? <ProfileView /> : renderView()}
+            {showSettings ? <SettingsView profile={profile} /> : showProfile ? <ProfileView profile={profile} onUpdateProfile={updateProfile} /> : renderView()}
           </div>
         </div>
       </main>
