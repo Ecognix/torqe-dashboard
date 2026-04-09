@@ -10,6 +10,8 @@ interface SidebarProps {
   isOpen: boolean;
   onClose: () => void;
   onProfileClick: () => void;
+  userName?: string;
+  userInitials?: string;
 }
 
 const mainNavItems = [
@@ -30,7 +32,7 @@ const channels = [
   { id: 'telegram', label: 'Telegram', badge: 1 },
 ];
 
-export default function Sidebar({ activeView, onViewChange, isOpen, onClose, onProfileClick }: SidebarProps) {
+export default function Sidebar({ activeView, onViewChange, isOpen, onClose, onProfileClick, userName, userInitials }: SidebarProps) {
   return (
     <aside className={`
       fixed lg:relative inset-y-0 left-0 z-50
@@ -144,10 +146,10 @@ export default function Sidebar({ activeView, onViewChange, isOpen, onClose, onP
           onClick={onProfileClick}
         >
           <div className="w-10 h-10 lg:w-9 lg:h-9 rounded-xl bg-gradient-to-br from-orange to-orange-400 flex items-center justify-center font-bold text-white text-sm">
-            AK
+            {userInitials || '?'}
           </div>
           <div className="flex-1 min-w-0 text-left">
-            <div className="text-base lg:text-sm font-semibold text-white truncate">Arjun Kapoor</div>
+            <div className="text-base lg:text-sm font-semibold text-white truncate">{userName || 'Your Profile'}</div>
             <div className="text-sm lg:text-xs text-orange font-medium">Pro Plan</div>
           </div>
         </button>

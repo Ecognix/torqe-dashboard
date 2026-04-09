@@ -1,6 +1,8 @@
 'use client';
 
 import { useState } from 'react';
+import type { UserProfile } from '@/lib/hooks/useProfile';
+import ChannelConnect from '@/components/ChannelConnect';
 import {
   Settings, User, Bell, Palette, Plug, Shield, CreditCard,
   HelpCircle, ChevronRight, ChevronDown, Mail, Phone, Globe,
@@ -59,7 +61,15 @@ function Field({ label, value, type = 'text', prefix }: { label: string; value: 
   );
 }
 
-export default function SettingsView() {
+interface SettingsViewProps {
+  profile?: UserProfile | null;
+}
+
+export default function SettingsView({ profile }: SettingsViewProps) {
+  const getInitials = () => {
+    if (!profile?.full_name) return '?';
+    return profile.full_name.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2);
+  };
   const [activeSection, setActiveSection] = useState('profile');
   const [saved, setSaved] = useState(false);
   const [showCurrentPw, setShowCurrentPw] = useState(false);
@@ -158,10 +168,10 @@ export default function SettingsView() {
           {/* Mini profile card at top - hidden on mobile */}
           <div className="hidden lg:flex bg-white rounded-2xl border border-slate-200 p-4 mb-2 items-center gap-3">
             <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-orange-400 to-orange-600 flex items-center justify-center text-white font-bold text-sm shadow-sm flex-shrink-0">
-              AK
+              {getInitials()}
             </div>
             <div className="min-w-0">
-              <p className="text-sm font-semibold text-slate-900 truncate">Arjun Kapoor</p>
+              <p className="text-sm font-semibold text-slate-900 truncate">{profile?.full_name || 'Your Profile'}</p>
               <p className="text-xs text-orange-500 font-medium">Pro Plan</p>
             </div>
           </div>
@@ -217,7 +227,7 @@ export default function SettingsView() {
               <div className="flex items-center gap-5 p-4 rounded-xl bg-slate-50 border border-slate-100">
                 <div className="relative">
                   <div className="w-20 h-20 rounded-2xl bg-gradient-to-br from-orange-400 to-orange-600 flex items-center justify-center text-white text-2xl font-bold shadow-lg">
-                    AK
+                    {getInitials()}
                   </div>
                   <button className="absolute -bottom-1.5 -right-1.5 w-8 h-8 rounded-full bg-slate-900 text-white flex items-center justify-center hover:bg-slate-700 transition-colors shadow-md">
                     <Upload className="w-3.5 h-3.5" />
@@ -235,21 +245,21 @@ export default function SettingsView() {
 
               {/* Form grid */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-                <Field label="Full Name" value="Arjun Kapoor" />
-                <Field label="Username" value="arjunkapoor" prefix="@" />
-                <Field label="Email" value="arjun@torqe.ai" type="email" />
-                <Field label="Phone" value="+91 98765 43210" type="tel" />
-                <Field label="Company" value="TechVentures Inc." />
-                <Field label="Role" value="Head of Sales" />
-                <Field label="Website" value="https://arjunkapoor.com" type="url" />
-                <Field label="Location" value="Mumbai, India" />
+                <Field label="Full Name" value={profile?.full_name || ''} />
+                <Field label="Username" value={profile?.full_name?.toLowerCase().replace(/\s+/g, '') || ''} prefix="@" />
+                <Field label="Email" value={profile?.email || ''} type="email" />
+                <Field label="Phone" value={profile?.phone || ''} type="tel" />
+                <Field label="Company" value={profile?.company || ''} />
+                <Field label="Role" value={profile?.job_title || profile?.role || ''} />
+                <Field label="Website" value={profile?.website || ''} type="url" />
+                <Field label="Location" value={profile?.location || ''} />
                 <div className="md:col-span-2">
                   <label className="block text-xs font-semibold text-slate-500 uppercase tracking-wide mb-1.5">
                     Bio <span className="text-slate-400 normal-case font-normal">({bioLen}/160)</span>
                   </label>
                   <textarea
                     rows={3}
-                    defaultValue="Sales professional with 8+ years of experience in B2B SaaS. Passionate about AI and automation."
+                    defaultValue={profile?.bio || ''}
                     maxLength={160}
                     onChange={e => setBioLen(e.target.value.length)}
                     className="w-full px-4 py-3 rounded-xl border border-slate-200 bg-white text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-orange-400/30 focus:border-orange-400 transition-all resize-none"
@@ -286,7 +296,7 @@ export default function SettingsView() {
                   </div>
                   <div>
                     <p className="font-semibold text-slate-900 text-sm">Email Address</p>
-                    <p className="text-xs text-slate-500">arjun@torqe.ai · Verified</p>
+                    <p className="text-xs text-slate-500">{profile?.email || 'Not set'} · Verified</p>
                   </div>
                 </div>
                 <button className="px-3 py-1.5 rounded-lg border border-slate-200 text-xs font-semibold text-slate-700 hover:bg-slate-50 transition-colors">Change</button>
@@ -548,57 +558,7 @@ export default function SettingsView() {
           {activeSection === 'integrations' && (
             <div className="space-y-5">
               <SectionHeader title="Integrations" desc="Connect your apps to supercharge your Torqe workflow" />
-
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                {integrations.map((app, i) => (
-                  <div key={i} className={`p-4 rounded-xl border transition-all hover:shadow-sm ${app.connected ? 'border-slate-200' : 'border-dashed border-slate-300 bg-slate-50/50'}`}>
-                    <div className="flex items-start justify-between mb-3">
-                      <div className="flex items-center gap-3">
-                        <div
-                          className="w-10 h-10 rounded-xl flex items-center justify-center text-white text-xs font-bold shadow-sm"
-                          style={{ backgroundColor: app.color }}
-                        >
-                          {app.letter}
-                        </div>
-                        <div>
-                          <p className="font-semibold text-slate-900 text-sm">{app.name}</p>
-                          <p className="text-xs text-slate-500">{app.desc}</p>
-                        </div>
-                      </div>
-                      <span className={`text-xs px-2 py-0.5 rounded-full font-medium ${
-                        app.plan === 'Enterprise' ? 'bg-purple-100 text-purple-700' :
-                        app.plan === 'Pro' ? 'bg-orange-100 text-orange-700' :
-                        'bg-slate-100 text-slate-500'
-                      }`}>{app.plan}</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      {app.connected && (
-                        <div className="flex items-center gap-1 text-emerald-600 text-xs flex-1">
-                          <CheckCircle2 className="w-3.5 h-3.5" />
-                          <span className="font-medium">Connected</span>
-                        </div>
-                      )}
-                      <button className={`flex-shrink-0 px-3.5 py-1.5 rounded-lg text-xs font-semibold transition-colors flex items-center gap-1.5 ${
-                        app.connected
-                          ? 'bg-slate-100 text-slate-600 hover:bg-red-50 hover:text-red-600'
-                          : 'bg-slate-900 text-white hover:bg-slate-700'
-                      }`}>
-                        {app.connected ? <><X className="w-3 h-3" /> Disconnect</> : <><Plus className="w-3 h-3" /> Connect</>}
-                      </button>
-                      {app.connected && (
-                        <button className="p-1.5 rounded-lg text-slate-400 hover:text-slate-600 hover:bg-slate-100 transition-colors">
-                          <RefreshCw className="w-3.5 h-3.5" />
-                        </button>
-                      )}
-                    </div>
-                  </div>
-                ))}
-              </div>
-
-              <div className="flex items-center gap-2 text-xs text-slate-500 p-3 rounded-xl bg-slate-50 border border-slate-200">
-                <Zap className="w-4 h-4 text-orange-500" />
-                Need a custom integration? <a href="#" className="text-orange-500 font-medium hover:underline">Contact our API team →</a>
-              </div>
+              <ChannelConnect />
             </div>
           )}
 

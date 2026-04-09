@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import {
   Mail, Phone, MapPin, Calendar, Edit2, Check, Plus, Activity,
   MessageSquare, DollarSign, Users, Clock, Download,
@@ -8,6 +8,7 @@ import {
   ChevronRight
 } from 'lucide-react';
 import { getChannelIcon } from '@/lib/icons';
+import type { UserProfile } from '@/lib/hooks/useProfile';
 
 // ── Inline BW channel icon chips ─────────────────────────────────────
 function ChannelChip({ id, label }: { id: string; label: string }) {
@@ -19,19 +20,59 @@ function ChannelChip({ id, label }: { id: string; label: string }) {
   );
 }
 
-export default function ProfileView() {
+interface ProfileViewProps {
+  profile?: UserProfile | null;
+  onUpdateProfile?: (updates: Record<string, any>) => Promise<{ error: any }>;
+}
+
+export default function ProfileView({ profile, onUpdateProfile }: ProfileViewProps) {
   const [isEditing, setIsEditing] = useState(false);
   const [activeTab, setActiveTab] = useState<'overview' | 'activity' | 'team' | 'profiles'>('overview');
   const [editValues, setEditValues] = useState({
-    name: 'Arjun Kapoor',
-    role: 'Head of Sales',
-    company: 'TechVentures Inc.',
-    email: 'arjun@torqe.ai',
-    phone: '+91 98765 43210',
-    location: 'Mumbai, India',
-    website: 'https://arjunkapoor.com',
-    bio: 'Sales professional with 8+ years of experience in B2B SaaS. Passionate about AI and automation. Building relationships that last.',
+    name: '',
+    role: '',
+    company: '',
+    email: '',
+    phone: '',
+    location: '',
+    website: '',
+    bio: '',
   });
+
+  useEffect(() => {
+    if (profile) {
+      setEditValues({
+        name: profile.full_name || '',
+        role: profile.job_title || profile.role || '',
+        company: profile.company || '',
+        email: profile.email || '',
+        phone: profile.phone || '',
+        location: profile.location || '',
+        website: profile.website || '',
+        bio: profile.bio || '',
+      });
+    }
+  }, [profile]);
+
+  const getInitials = () => {
+    if (!editValues.name) return '?';
+    return editValues.name.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2);
+  };
+
+  const handleSave = async () => {
+    if (onUpdateProfile) {
+      await onUpdateProfile({
+        full_name: editValues.name || null,
+        job_title: editValues.role || null,
+        company: editValues.company || null,
+        phone: editValues.phone || null,
+        location: editValues.location || null,
+        website: editValues.website || null,
+        bio: editValues.bio || null,
+      });
+    }
+    setIsEditing(false);
+  };
 
   const stats = [
     { label: 'Messages Sent', value: '2,847', icon: MessageSquare, color: 'text-orange-500', bg: 'bg-orange-50', change: '+12%', spark: [30, 45, 35, 60, 48, 70, 62] },
@@ -162,7 +203,7 @@ export default function ProfileView() {
             {/* Avatar */}
             <div className="relative flex-shrink-0">
               <div className="w-20 h-20 lg:w-24 lg:h-24 rounded-2xl bg-gradient-to-br from-orange-400 to-orange-600 flex items-center justify-center text-white text-2xl lg:text-3xl font-bold shadow-lg">
-                AK
+                {getInitials()}
               </div>
               <div className="absolute -bottom-1 -right-1 w-5 h-5 rounded-full bg-emerald-500 border-2 border-white" title="Online" />
               <button className="absolute -top-2 -right-2 w-8 h-8 rounded-full bg-slate-900 text-white flex items-center justify-center hover:bg-slate-700 transition-colors shadow-lg">
@@ -218,9 +259,9 @@ export default function ProfileView() {
           )}
 
           {/* Connected channel chips */}
-          {!isEditing && (
+          {!isEditing && (profile?.primary_channels?.length ?? 0) > 0 && (
             <div className="mt-3 flex flex-wrap gap-2">
-              {['whatsapp', 'gmail', 'linkedin', 'telegram'].map(id => (
+              {(profile?.primary_channels || []).map(id => (
                 <ChannelChip key={id} id={id} label={id.charAt(0).toUpperCase() + id.slice(1)} />
               ))}
             </div>
@@ -262,7 +303,7 @@ export default function ProfileView() {
               </div>
               <div className="flex gap-2">
                 <button
-                  onClick={() => setIsEditing(false)}
+                  onClick={handleSave}
                   className="px-5 py-2.5 rounded-xl bg-orange-500 text-white font-semibold text-sm hover:bg-orange-600 transition-colors flex items-center gap-2"
                 >
                   <Check className="w-4 h-4" /> Save Changes
