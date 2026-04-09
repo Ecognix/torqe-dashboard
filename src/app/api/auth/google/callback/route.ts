@@ -1,14 +1,14 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createServerSupabaseClient } from '@/lib/supabase/server';
 
-// HARDCODED VALUES FOR TESTING
-const HARDCODED_CLIENT_ID = '873260350685-ouadlgh5mkph1g4judcksn0s8aj5ej39.apps.googleusercontent.com';
-const HARDCODED_CLIENT_SECRET = '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';
-const HARDCODED_REDIRECT_URI = 'http://localhost:3000/api/auth/google/callback';
+// Use environment variables for production
+const GOOGLE_CLIENT_ID = process.env.GOOGLE_CLIENT_ID!;
+const GOOGLE_CLIENT_SECRET = process.env.GOOGLE_CLIENT_SECRET!;
+const GOOGLE_REDIRECT_URI = process.env.GOOGLE_REDIRECT_URI || `${process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'}/api/auth/google/callback`;
 
 console.log('🔴 GOOGLE OAuth ENV CHECK 🔴');
 console.log('ENV CLIENT_ID:', process.env.GOOGLE_CLIENT_ID || 'NOT SET');
-console.log('HARDCODED CLIENT_ID:', HARDCODED_CLIENT_ID);
+console.log('USING CLIENT_ID:', GOOGLE_CLIENT_ID);
 
 /**
  * Google OAuth Callback for Gmail integration
@@ -42,12 +42,12 @@ export async function GET(request: NextRequest) {
       throw new Error('Invalid state parameter');
     }
 
-    // Exchange code for tokens - USING HARDCODED VALUES
-    const clientId = HARDCODED_CLIENT_ID;
-    const clientSecret = HARDCODED_CLIENT_SECRET;
-    const redirectUri = HARDCODED_REDIRECT_URI;
+    // Exchange code for tokens
+    const clientId = GOOGLE_CLIENT_ID;
+    const clientSecret = GOOGLE_CLIENT_SECRET;
+    const redirectUri = GOOGLE_REDIRECT_URI;
     
-    console.log('🔴 USING HARDCODED VALUES');
+    console.log('🔴 USING ENV VALUES');
     console.log('client_id:', clientId);
     console.log('client_secret length:', clientSecret.length);
     
