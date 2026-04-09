@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Suspense } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
 import { useProfile } from '@/lib/hooks/useProfile';
 import Sidebar from '@/components/Sidebar';
@@ -21,7 +21,7 @@ import type { Message } from '@/types';
 
 type ViewType = 'inbox' | 'ai' | 'pipeline' | 'scheduled' | 'negotiate' | 'calendar' | 'channel-whatsapp' | 'channel-gmail' | 'channel-linkedin' | 'channel-slack' | 'channel-instagram' | 'channel-telegram';
 
-export default function Dashboard() {
+function DashboardContent() {
   const searchParams = useSearchParams();
   const router = useRouter();
   const { profile, loading: profileLoading, updateProfile, getInitials } = useProfile();
@@ -229,5 +229,15 @@ export default function Dashboard() {
         />
       )}
     </div>
+  );
+}
+
+export default function Dashboard() {
+  return (
+    <Suspense fallback={<div className="min-h-screen bg-slate-50 flex items-center justify-center">
+      <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-orange"></div>
+    </div>}>
+      <DashboardContent />
+    </Suspense>
   );
 }
